@@ -2,7 +2,7 @@ aid: ups
 url: https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml
 apis:
   - aid: ups:ups
-    name: UPS
+    name: UPS API
     tags:
       - API
     humanURL: ' https://developer.ups.com/?loc=en_US'
