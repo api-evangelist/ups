@@ -1,12 +1,11 @@
 aid: ups
-url: 
-  https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml
 apis:
   - aid: ups:ups
     name: UPS API
     tags:
-      - Shipping
       - Logistics
+      - Shipping
     humanURL: ' https://developer.ups.com/?loc=en_US'
     properties:
       - url: ' https://developer.ups.com/?loc=en_US'
@@ -20,8 +19,8 @@ apis:
       own platforms.
 name: UPS
 tags:
-  - Shipping
   - Logistics
+  - Shipping
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
