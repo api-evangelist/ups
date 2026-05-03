@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "ups": "https://onlinetools.ups.com/api/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Shipment": "schema:ParcelDelivery",
+    "trackingNumber": { "@id": "schema:trackingNumber", "@type": "xsd:string" },
+    "shipper": { "@id": "schema:sender", "@type": "schema:Organization" },
+    "shipTo": { "@id": "schema:recipient", "@type": "schema:Person" },
+    "deliveryDate": { "@id": "schema:expectedArrivalUntil", "@type": "xsd:date" },
+    "serviceCode": { "@id": "ups:serviceCode", "@type": "xsd:string" },
+
+    "Address": "schema:PostalAddress",
+    "addressLine1": { "@id": "schema:streetAddress", "@type": "xsd:string" },
+    "city": { "@id": "schema:addressLocality", "@type": "xsd:string" },
+    "stateProvinceCode": { "@id": "schema:addressRegion", "@type": "xsd:string" },
+    "postalCode": { "@id": "schema:postalCode", "@type": "xsd:string" },
+    "countryCode": { "@id": "schema:addressCountry", "@type": "xsd:string" },
+    "residential": { "@id": "ups:residentialAddress", "@type": "xsd:boolean" },
+
+    "Rate": "schema:PriceSpecification",
+    "totalAmount": { "@id": "schema:price", "@type": "xsd:decimal" },
+    "currencyCode": { "@id": "schema:priceCurrency", "@type": "xsd:string" },
+    "businessDaysInTransit": { "@id": "ups:businessDaysInTransit", "@type": "xsd:integer" },
+
+    "Pickup": "schema:DeliveryEvent",
+    "pickupDate": { "@id": "schema:startDate", "@type": "xsd:date" },
+    "readyTime": { "@id": "ups:readyTime", "@type": "xsd:string" },
+    "closeTime": { "@id": "ups:closeTime", "@type": "xsd:string" }
+  }
+}

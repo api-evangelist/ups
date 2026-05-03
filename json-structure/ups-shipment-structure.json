@@ -1,0 +1,34 @@
+{
+  "title": "UPS Shipment Structure",
+  "description": "Field-level documentation for the UPS Shipment resource",
+  "type": "object",
+  "fields": [
+    { "name": "trackingNumber", "type": "string", "required": false, "description": "UPS tracking number (1Z...)" },
+    { "name": "serviceCode", "type": "string", "required": false, "description": "UPS service code (01=Next Day Air, 02=2nd Day Air, 03=Ground)" },
+    { "name": "shipper.name", "type": "string", "required": false, "description": "Shipper company name" },
+    { "name": "shipper.accountNumber", "type": "string", "required": false, "description": "UPS account number" },
+    { "name": "shipper.address", "type": "object (Address)", "required": false, "description": "Shipper address" },
+    { "name": "shipTo.name", "type": "string", "required": false, "description": "Recipient name" },
+    { "name": "shipTo.address", "type": "object (Address)", "required": false, "description": "Delivery address" },
+    { "name": "package.weightLbs", "type": "number", "required": false, "description": "Package weight in pounds" },
+    { "name": "package.lengthIn", "type": "number", "required": false, "description": "Package length in inches" },
+    { "name": "package.widthIn", "type": "number", "required": false, "description": "Package width in inches" },
+    { "name": "package.heightIn", "type": "number", "required": false, "description": "Package height in inches" },
+    { "name": "label.format", "type": "string (enum)", "required": false, "description": "Label format: GIF | EPL | ZPL | PNG" },
+    { "name": "label.imageBase64", "type": "string", "required": false, "description": "Base64-encoded label image" },
+    { "name": "charges.currencyCode", "type": "string", "required": false, "description": "Currency code (e.g. USD)" },
+    { "name": "charges.totalAmount", "type": "number", "required": false, "description": "Total shipping charge" }
+  ],
+  "nested": {
+    "Address": {
+      "fields": [
+        { "name": "addressLine1", "type": "string", "required": false, "description": "Street address" },
+        { "name": "city", "type": "string", "required": false, "description": "City" },
+        { "name": "stateProvinceCode", "type": "string", "required": false, "description": "2-letter state/province code" },
+        { "name": "postalCode", "type": "string", "required": false, "description": "ZIP or postal code" },
+        { "name": "countryCode", "type": "string", "required": false, "description": "2-letter ISO country code" },
+        { "name": "residential", "type": "boolean", "required": false, "description": "Whether this is a residential address" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://onlinetools.ups.com/api/rating/v1/Shop",
+    "headers": {
+      "Authorization": "Bearer eyJraWQiOiI...",
+      "Content-Type": "application/json",
+      "transId": "rate-shop-20260503-001",
+      "transactionSrc": "MyShippingApp"
+    },
+    "body": {
+      "RateRequest": {
+        "PickupType": {
+          "Code": "01",
+          "Description": "Daily Pickup"
+        },
+        "Shipment": {
+          "Shipper": {
+            "Name": "Acme Corp",
+            "ShipperNumber": "A12B34",
+            "Address": {
+              "AddressLine": ["100 Main St"],
+              "City": "Louisville",
+              "StateProvinceCode": "KY",
+              "PostalCode": "40213",
+              "CountryCode": "US"
+            }
+          },
+          "ShipTo": {
+            "Name": "Customer Inc",
+            "Address": {
+              "AddressLine": ["500 Oak Ave"],
+              "City": "Atlanta",
+              "StateProvinceCode": "GA",
+              "PostalCode": "30301",
+              "CountryCode": "US"
+            }
+          },
+          "Package": {
+            "PackagingType": {
+              "Code": "02",
+              "Description": "Package"
+            },
+            "Dimensions": {
+              "UnitOfMeasurement": { "Code": "IN" },
+              "Length": "12",
+              "Width": "8",
+              "Height": "6"
+            },
+            "PackageWeight": {
+              "UnitOfMeasurement": { "Code": "LBS" },
+              "Weight": "5"
+            }
+          }
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "RateResponse": {
+        "Response": {
+          "ResponseStatus": {
+            "Code": "1",
+            "Description": "Success"
+          }
+        },
+        "RatedShipment": [
+          {
+            "Service": { "Code": "03", "Description": "Ground" },
+            "TotalCharges": {
+              "CurrencyCode": "USD",
+              "MonetaryValue": "12.48"
+            },
+            "GuaranteedDelivery": {
+              "BusinessDaysInTransit": "2"
+            }
+          },
+          {
+            "Service": { "Code": "02", "Description": "2nd Day Air" },
+            "TotalCharges": {
+              "CurrencyCode": "USD",
+              "MonetaryValue": "28.95"
+            },
+            "GuaranteedDelivery": {
+              "BusinessDaysInTransit": "2",
+              "DeliveryByTime": "23:00"
+            }
+          },
+          {
+            "Service": { "Code": "01", "Description": "Next Day Air" },
+            "TotalCharges": {
+              "CurrencyCode": "USD",
+              "MonetaryValue": "54.72"
+            },
+            "GuaranteedDelivery": {
+              "BusinessDaysInTransit": "1",
+              "DeliveryByTime": "10:30"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/ups/main/json-schema/ups-shipment-schema.json",
+  "title": "UPS Shipment",
+  "description": "A UPS shipment created through the UPS Shipping API",
+  "type": "object",
+  "properties": {
+    "trackingNumber": {
+      "type": "string",
+      "description": "UPS tracking number (e.g. 1Z999AA10123456784)",
+      "pattern": "^1Z[A-Z0-9]{16}$"
+    },
+    "serviceCode": {
+      "type": "string",
+      "description": "UPS service code (01=Next Day Air, 02=2nd Day Air, 03=Ground, etc.)"
+    },
+    "shipper": {
+      "type": "object",
+      "description": "Shipper information",
+      "properties": {
+        "name": { "type": "string" },
+        "accountNumber": { "type": "string", "description": "UPS account number" },
+        "address": { "$ref": "#/definitions/Address" }
+      }
+    },
+    "shipTo": {
+      "type": "object",
+      "description": "Recipient information",
+      "properties": {
+        "name": { "type": "string" },
+        "attentionName": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "$ref": "#/definitions/Address" }
+      }
+    },
+    "package": {
+      "type": "object",
+      "description": "Package dimensions and weight",
+      "properties": {
+        "weightLbs": { "type": "number" },
+        "lengthIn": { "type": "number" },
+        "widthIn": { "type": "number" },
+        "heightIn": { "type": "number" }
+      }
+    },
+    "label": {
+      "type": "object",
+      "description": "Generated shipping label",
+      "properties": {
+        "format": { "type": "string", "enum": ["GIF", "EPL", "ZPL", "PNG"] },
+        "imageBase64": { "type": "string", "description": "Base64-encoded label image" }
+      }
+    },
+    "charges": {
+      "type": "object",
+      "properties": {
+        "currencyCode": { "type": "string", "example": "USD" },
+        "totalAmount": { "type": "number" }
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "addressLine1": { "type": "string" },
+        "city": { "type": "string" },
+        "stateProvinceCode": { "type": "string" },
+        "postalCode": { "type": "string" },
+        "countryCode": { "type": "string", "example": "US" },
+        "residential": { "type": "boolean" }
+      }
+    }
+  }
+}

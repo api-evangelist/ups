@@ -1,0 +1,1079 @@
+openapi: 3.0.3
+info:
+  title: UPS Shipping API
+  description: >-
+    The UPS Shipping API enables developers to create and manage shipments,
+    generate shipping labels, validate addresses, retrieve rates, track packages,
+    schedule pickups, manage returns, and access time-in-transit information.
+    UPS uses OAuth 2.0 with client credentials for authentication.
+  version: 'v1'
+  contact:
+    name: UPS Developer Support
+    url: https://developer.ups.com/
+  termsOfService: https://www.ups.com/us/en/help-center/legal-terms-conditions/developer-terms-of-service.page
+servers:
+  - url: https://onlinetools.ups.com/api
+    description: UPS Production API
+  - url: https://wwwcie.ups.com/api
+    description: UPS Customer Integration Environment (CIE - Testing)
+
+tags:
+  - name: OAuth
+    description: OAuth 2.0 token management
+  - name: Rating
+    description: Shipping rates and service comparison
+  - name: Shipping
+    description: Shipment creation and label generation
+  - name: Tracking
+    description: Package tracking and status
+  - name: Address Validation
+    description: Address validation and standardization
+  - name: Pickup
+    description: Pickup scheduling and management
+  - name: Time In Transit
+    description: Transit time and service schedules
+  - name: Paperless Documents
+    description: International paperless document management
+
+paths:
+  /security/v1/oauth/token:
+    post:
+      operationId: getOAuthToken
+      summary: Get OAuth Token
+      description: >-
+        Obtain an OAuth 2.0 access token using client credentials grant type.
+        The access token is used to authenticate all subsequent API requests.
+      tags:
+        - OAuth
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - grant_type
+              properties:
+                grant_type:
+                  type: string
+                  enum: [client_credentials]
+                  description: OAuth grant type
+      responses:
+        '200':
+          description: Access token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthTokenResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /rating/v1/Shop:
+    post:
+      operationId: shopRates
+      summary: Shop Rates
+      description: >-
+        Retrieve rates for all available UPS services for a given shipment,
+        allowing comparison of service levels, prices, and transit times.
+      tags:
+        - Rating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateRequest'
+      responses:
+        '200':
+          description: Rate shop response with all available services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /rating/v1/Rate:
+    post:
+      operationId: getRate
+      summary: Get Rate
+      description: >-
+        Retrieve the rate for a specific UPS service for a given shipment.
+      tags:
+        - Rating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateRequest'
+      responses:
+        '200':
+          description: Rate response for specific service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /shipments/v1/ship:
+    post:
+      operationId: createShipment
+      summary: Create Shipment
+      description: >-
+        Create a new shipment and generate a shipping label. Returns a tracking
+        number, label image, and shipment confirmation details.
+      tags:
+        - Shipping
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentRequest'
+      responses:
+        '200':
+          description: Shipment created with label
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShipmentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /shipments/v1/void/cancel/{shipmentIdentificationNumber}:
+    delete:
+      operationId: voidShipment
+      summary: Void Shipment
+      description: Cancel/void a shipment by its tracking number before it is tendered to UPS.
+      tags:
+        - Shipping
+      parameters:
+        - name: shipmentIdentificationNumber
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UPS tracking number / shipment identification number
+      responses:
+        '200':
+          description: Shipment voided successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /track/v1/details/{inquiryNumber}:
+    get:
+      operationId: trackShipment
+      summary: Track Shipment
+      description: >-
+        Retrieve real-time tracking information for a package or shipment
+        using a UPS tracking number.
+      tags:
+        - Tracking
+      parameters:
+        - name: inquiryNumber
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UPS tracking number (1Z...) or shipment reference number
+        - name: locale
+          in: query
+          schema:
+            type: string
+            default: en_US
+          description: Locale for response messages
+        - name: returnSignature
+          in: query
+          schema:
+            type: string
+            enum: ['true', 'false']
+          description: Include delivery signature image if available
+        - name: returnMilestones
+          in: query
+          schema:
+            type: string
+            enum: ['true', 'false']
+          description: Include delivery milestone tracking
+      responses:
+        '200':
+          description: Tracking details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrackResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /addressvalidation/v1/1:
+    post:
+      operationId: validateAddressStreetLevel
+      summary: Validate Address Street Level
+      description: >-
+        Validate and standardize a street-level address. Returns whether the
+        address is valid, standardized formatting, and residential/commercial
+        classification.
+      tags:
+        - Address Validation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressValidationRequest'
+      responses:
+        '200':
+          description: Address validation response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressValidationResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /pickup/v1/pickups:
+    post:
+      operationId: schedulePickup
+      summary: Schedule Pickup
+      description: Schedule a UPS pickup for one or more shipments at a specified address.
+      tags:
+        - Pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PickupRequest'
+      responses:
+        '200':
+          description: Pickup scheduled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /pickup/v1/pickups/{prn}:
+    delete:
+      operationId: cancelPickup
+      summary: Cancel Pickup
+      description: Cancel a previously scheduled UPS pickup using the pickup request number.
+      tags:
+        - Pickup
+      parameters:
+        - name: prn
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Pickup request number
+      responses:
+        '200':
+          description: Pickup cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelPickupResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /timeintransit/v1/transittimes:
+    post:
+      operationId: getTimeInTransit
+      summary: Get Time In Transit
+      description: >-
+        Get estimated transit times for UPS services between origin and
+        destination, given a ship date.
+      tags:
+        - Time In Transit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeInTransitRequest'
+      responses:
+        '200':
+          description: Time-in-transit estimates by service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeInTransitResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /paperlessdocuments/v1/upload/{shipperNumber}:
+    post:
+      operationId: uploadPaperlessDocument
+      summary: Upload Paperless Document
+      description: >-
+        Upload an international shipping document (e.g., commercial invoice,
+        certificate of origin) for paperless trade.
+      tags:
+        - Paperless Documents
+      parameters:
+        - name: shipperNumber
+          in: path
+          required: true
+          schema:
+            type: string
+          description: UPS account (shipper) number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaperlessDocumentRequest'
+      responses:
+        '200':
+          description: Document uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaperlessDocumentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token from /security/v1/oauth/token
+
+  responses:
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    OAuthTokenResponse:
+      type: object
+      properties:
+        token_type:
+          type: string
+          example: Bearer
+        issued_at:
+          type: string
+        client_id:
+          type: string
+        access_token:
+          type: string
+          description: Bearer token for API authorization
+        expires_in:
+          type: string
+          example: '14399'
+        status:
+          type: string
+          example: approved
+
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+
+    Address:
+      type: object
+      properties:
+        AddressLine:
+          type: array
+          items:
+            type: string
+          description: Street address lines
+        City:
+          type: string
+        StateProvinceCode:
+          type: string
+          description: Two-letter state/province code
+        PostalCode:
+          type: string
+        CountryCode:
+          type: string
+          description: Two-letter ISO country code
+          example: US
+        ResidentialAddressIndicator:
+          type: string
+          description: Presence indicates residential address
+
+    ShipperInfo:
+      type: object
+      required:
+        - Name
+        - ShipperNumber
+        - Address
+      properties:
+        Name:
+          type: string
+        AttentionName:
+          type: string
+        ShipperNumber:
+          type: string
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+
+    PackageInfo:
+      type: object
+      properties:
+        PackagingType:
+          type: object
+          properties:
+            Code:
+              type: string
+              description: "02 = customer supplied package"
+        Dimensions:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum: [IN, CM]
+            Length:
+              type: string
+            Width:
+              type: string
+            Height:
+              type: string
+        PackageWeight:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum: [LBS, KGS]
+            Weight:
+              type: string
+
+    ServiceCode:
+      type: object
+      properties:
+        Code:
+          type: string
+          description: |
+            UPS service codes:
+            01=Next Day Air, 02=2nd Day Air, 03=Ground,
+            07=World Wide Express, 08=World Wide Expedited,
+            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
+            14=Next Day Air Early AM, 54=Worldwide Express Plus,
+            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
+            83=Today Dedicated Courier, 84=Today Intercity,
+            85=Today Express, 86=Today Express Saver
+        Description:
+          type: string
+
+    RateRequest:
+      type: object
+      required:
+        - RateRequest
+      properties:
+        RateRequest:
+          type: object
+          required:
+            - Shipment
+          properties:
+            PickupType:
+              type: object
+              properties:
+                Code:
+                  type: string
+            Shipment:
+              type: object
+              properties:
+                Shipper:
+                  $ref: '#/components/schemas/ShipperInfo'
+                ShipTo:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                    Address:
+                      $ref: '#/components/schemas/Address'
+                ShipFrom:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                    Address:
+                      $ref: '#/components/schemas/Address'
+                Service:
+                  $ref: '#/components/schemas/ServiceCode'
+                Package:
+                  $ref: '#/components/schemas/PackageInfo'
+
+    RateResponse:
+      type: object
+      properties:
+        RateResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+              properties:
+                ResponseStatus:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+            RatedShipment:
+              type: array
+              items:
+                type: object
+                properties:
+                  Service:
+                    $ref: '#/components/schemas/ServiceCode'
+                  TotalCharges:
+                    type: object
+                    properties:
+                      CurrencyCode:
+                        type: string
+                      MonetaryValue:
+                        type: string
+                  GuaranteedDelivery:
+                    type: object
+                    properties:
+                      BusinessDaysInTransit:
+                        type: string
+                      DeliveryByTime:
+                        type: string
+
+    ShipmentRequest:
+      type: object
+      required:
+        - ShipmentRequest
+      properties:
+        ShipmentRequest:
+          type: object
+          properties:
+            Request:
+              type: object
+              properties:
+                RequestOption:
+                  type: string
+                  enum: [validate, nonvalidate]
+            Shipment:
+              type: object
+              properties:
+                Shipper:
+                  $ref: '#/components/schemas/ShipperInfo'
+                ShipTo:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                    AttentionName:
+                      type: string
+                    Phone:
+                      type: object
+                      properties:
+                        Number:
+                          type: string
+                    Address:
+                      $ref: '#/components/schemas/Address'
+                Service:
+                  $ref: '#/components/schemas/ServiceCode'
+                Package:
+                  $ref: '#/components/schemas/PackageInfo'
+            LabelSpecification:
+              type: object
+              properties:
+                LabelImageFormat:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                      enum: [GIF, EPL, ZPL, PNG]
+                LabelStockSize:
+                  type: object
+                  properties:
+                    Height:
+                      type: string
+                    Width:
+                      type: string
+
+    ShipmentResponse:
+      type: object
+      properties:
+        ShipmentResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            ShipmentResults:
+              type: object
+              properties:
+                ShipmentIdentificationNumber:
+                  type: string
+                  description: UPS tracking number
+                PackageResults:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      TrackingNumber:
+                        type: string
+                      ShippingLabel:
+                        type: object
+                        properties:
+                          ImageFormat:
+                            type: object
+                            properties:
+                              Code:
+                                type: string
+                          GraphicImage:
+                            type: string
+                            description: Base64-encoded label image
+                BillingWeight:
+                  type: object
+                  properties:
+                    UnitOfMeasurement:
+                      type: object
+                      properties:
+                        Code:
+                          type: string
+                    Weight:
+                      type: string
+                ShipmentCharges:
+                  type: object
+                  properties:
+                    TotalCharges:
+                      type: object
+                      properties:
+                        CurrencyCode:
+                          type: string
+                        MonetaryValue:
+                          type: string
+
+    VoidResponse:
+      type: object
+      properties:
+        VoidShipmentResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            SummaryResult:
+              type: object
+              properties:
+                Status:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+
+    TrackResponse:
+      type: object
+      properties:
+        trackResponse:
+          type: object
+          properties:
+            shipment:
+              type: array
+              items:
+                type: object
+                properties:
+                  inquiryNumber:
+                    type: string
+                  package:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        trackingNumber:
+                          type: string
+                        currentStatus:
+                          type: object
+                          properties:
+                            code:
+                              type: string
+                            description:
+                              type: string
+                            simplifiedTextDescription:
+                              type: string
+                            statusCode:
+                              type: string
+                        deliveryDate:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              date:
+                                type: string
+                              type:
+                                type: string
+                        activity:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              location:
+                                type: object
+                                properties:
+                                  address:
+                                    $ref: '#/components/schemas/Address'
+                              status:
+                                type: object
+                                properties:
+                                  code:
+                                    type: string
+                                  description:
+                                    type: string
+                              date:
+                                type: string
+                              time:
+                                type: string
+
+    AddressValidationRequest:
+      type: object
+      required:
+        - AddressValidationRequest
+      properties:
+        AddressValidationRequest:
+          type: object
+          properties:
+            Request:
+              type: object
+              properties:
+                RequestOption:
+                  type: string
+                  enum: ['1', '2', '3']
+                  description: "1=Address Validation, 2=Address Classification, 3=Both"
+            AddressKeyFormat:
+              type: object
+              required:
+                - CountryCode
+              properties:
+                ConsigneeName:
+                  type: string
+                AddressLine:
+                  type: array
+                  items:
+                    type: string
+                PoliticalDivision2:
+                  type: string
+                  description: City
+                PoliticalDivision1:
+                  type: string
+                  description: State/Province
+                PostcodePrimaryLow:
+                  type: string
+                  description: ZIP/Postal code
+                CountryCode:
+                  type: string
+
+    AddressValidationResponse:
+      type: object
+      properties:
+        AddressValidationResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            AddressClassification:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum: ['0', '1', '2']
+                  description: "0=Unknown, 1=Commercial, 2=Residential"
+                Description:
+                  type: string
+            AddressKeyFormat:
+              type: object
+              properties:
+                AddressLine:
+                  type: array
+                  items:
+                    type: string
+                PoliticalDivision2:
+                  type: string
+                PoliticalDivision1:
+                  type: string
+                PostcodePrimaryLow:
+                  type: string
+                PostcodeExtendedLow:
+                  type: string
+                CountryCode:
+                  type: string
+
+    PickupRequest:
+      type: object
+      properties:
+        PickupCreationRequest:
+          type: object
+          properties:
+            RatePickupIndicator:
+              type: string
+              enum: ['Y', 'N']
+            Shipper:
+              type: object
+              properties:
+                Account:
+                  type: object
+                  properties:
+                    AccountNumber:
+                      type: string
+                    AccountCountryCode:
+                      type: string
+            PickupDateInfo:
+              type: object
+              properties:
+                CloseTime:
+                  type: string
+                  description: Latest pickup time (HHMM)
+                ReadyTime:
+                  type: string
+                  description: Earliest ready time (HHMM)
+                PickupDate:
+                  type: string
+                  description: Pickup date (YYYYMMDD)
+            PickupAddress:
+              type: object
+              properties:
+                CompanyName:
+                  type: string
+                ContactName:
+                  type: string
+                AddressLine:
+                  type: string
+                City:
+                  type: string
+                StateProvince:
+                  type: string
+                PostalCode:
+                  type: string
+                CountryCode:
+                  type: string
+                ResidentialIndicator:
+                  type: string
+                  enum: ['Y', 'N']
+            OverweightIndicator:
+              type: string
+              enum: ['Y', 'N']
+            PaymentMethod:
+              type: string
+              enum: ['01']
+              description: "01 = Account"
+
+    PickupResponse:
+      type: object
+      properties:
+        PickupCreationResponse:
+          type: object
+          properties:
+            PRN:
+              type: string
+              description: Pickup request number
+            RateStatus:
+              type: object
+              properties:
+                Code:
+                  type: string
+                Description:
+                  type: string
+
+    CancelPickupResponse:
+      type: object
+      properties:
+        PickupCancelResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+
+    TimeInTransitRequest:
+      type: object
+      properties:
+        originCountryCode:
+          type: string
+          description: ISO country code of origin
+        originStateProvince:
+          type: string
+        originCityName:
+          type: string
+        originPostalCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        destinationStateProvince:
+          type: string
+        destinationCityName:
+          type: string
+        destinationPostalCode:
+          type: string
+        weight:
+          type: string
+          description: Package weight
+        weightUnitOfMeasure:
+          type: string
+          enum: [LBS, KGS]
+        shipDate:
+          type: string
+          description: Scheduled ship date (YYYY-MM-DD)
+        shipTime:
+          type: string
+          description: Ship time (HH:MM:SS)
+        residentialIndicator:
+          type: string
+          enum: ['1', '2']
+          description: "1=Residential, 2=Commercial"
+
+    TimeInTransitResponse:
+      type: object
+      properties:
+        validationList:
+          type: object
+        destinationPickList:
+          type: array
+          items:
+            type: object
+        emsResponse:
+          type: object
+          properties:
+            shipDate:
+              type: string
+            shipTime:
+              type: string
+            services:
+              type: array
+              items:
+                type: object
+                properties:
+                  serviceLevel:
+                    type: string
+                  serviceLevelDescription:
+                    type: string
+                  deliveryDate:
+                    type: string
+                  deliveryTime:
+                    type: string
+                  commitTime:
+                    type: string
+                  businessTransitDays:
+                    type: integer
+
+    PaperlessDocumentRequest:
+      type: object
+      properties:
+        UploadRequest:
+          type: object
+          properties:
+            Request:
+              type: object
+            UserCreatedForm:
+              type: array
+              items:
+                type: object
+                properties:
+                  UserCreatedFormFileName:
+                    type: string
+                  UserCreatedFormFile:
+                    type: string
+                    description: Base64-encoded document content
+                  UserCreatedFormFileFormat:
+                    type: object
+                    properties:
+                      Code:
+                        type: string
+                        enum: [pdf, gif, jpg, doc, docx]
+                  UserCreatedFormDocumentType:
+                    type: object
+                    properties:
+                      Code:
+                        type: string
+
+    PaperlessDocumentResponse:
+      type: object
+      properties:
+        UploadResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            FormsHistoryDocumentID:
+              type: array
+              items:
+                type: object
+                properties:
+                  DocumentID:
+                    type: string
+
+security:
+  - BearerAuth: []

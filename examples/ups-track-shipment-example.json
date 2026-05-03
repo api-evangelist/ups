@@ -1,0 +1,78 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://onlinetools.ups.com/api/track/v1/details/1Z999AA10123456784?locale=en_US",
+    "headers": {
+      "Authorization": "Bearer eyJraWQiOiI...",
+      "Accept": "application/json",
+      "transId": "track-req-20260503-001",
+      "transactionSrc": "MyShippingApp"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "trackResponse": {
+        "shipment": [
+          {
+            "inquiryNumber": "1Z999AA10123456784",
+            "package": [
+              {
+                "trackingNumber": "1Z999AA10123456784",
+                "currentStatus": {
+                  "code": "D",
+                  "description": "Delivered",
+                  "simplifiedTextDescription": "Delivered",
+                  "statusCode": "011"
+                },
+                "deliveryDate": [
+                  {
+                    "date": "20260502",
+                    "type": "DEL"
+                  }
+                ],
+                "activity": [
+                  {
+                    "location": {
+                      "address": {
+                        "city": "Atlanta",
+                        "stateProvince": "GA",
+                        "postalCode": "30301",
+                        "countryCode": "US"
+                      }
+                    },
+                    "status": {
+                      "code": "D",
+                      "description": "Delivered"
+                    },
+                    "date": "20260502",
+                    "time": "143500"
+                  },
+                  {
+                    "location": {
+                      "address": {
+                        "city": "Atlanta",
+                        "stateProvince": "GA",
+                        "postalCode": "30301",
+                        "countryCode": "US"
+                      }
+                    },
+                    "status": {
+                      "code": "I",
+                      "description": "Out For Delivery Today"
+                    },
+                    "date": "20260502",
+                    "time": "083200"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

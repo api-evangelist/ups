@@ -1,0 +1,135 @@
+title: UPS Vocabulary
+description: >-
+  Domain vocabulary for the UPS (United Parcel Service) shipping and logistics
+  API platform, covering shipping, tracking, ratings, and logistics concepts.
+version: '1.0'
+created: '2026-05-03'
+modified: '2026-05-03'
+tags:
+  - Shipping
+  - Logistics
+  - E-Commerce
+  - Supply Chain
+
+terms:
+  - term: Tracking Number
+    definition: >-
+      A unique identifier assigned to a UPS shipment, typically starting with
+      "1Z" followed by 16 alphanumeric characters. Used to track a package
+      through the UPS network.
+    synonyms:
+      - Shipment Identification Number
+    related:
+      - Shipment
+      - Tracking
+
+  - term: Shipper Number
+    definition: >-
+      A UPS account number (6 characters, alphanumeric) that identifies the
+      billing account for a shipment. Required for creating shipments and
+      accessing negotiated rates.
+    synonyms:
+      - Account Number
+    related:
+      - Shipment
+      - Rating
+
+  - term: Service Code
+    definition: >-
+      A two-digit code identifying the UPS shipping service level:
+      01=Next Day Air, 02=2nd Day Air, 03=Ground, 12=3 Day Select,
+      14=Next Day Air Early AM, etc.
+    related:
+      - Shipment
+      - Rating
+      - Time In Transit
+
+  - term: Rate Shopping
+    definition: >-
+      The process of querying rates for all available UPS services simultaneously
+      using the /rating/v1/Shop endpoint, allowing comparison of costs and
+      transit times across service levels.
+    related:
+      - Rating
+      - Service Code
+
+  - term: Residential Address
+    definition: >-
+      A delivery address classified as a residential location (home or apartment)
+      rather than a commercial business. Residential addresses typically incur
+      a surcharge over commercial delivery rates.
+    related:
+      - Address Validation
+      - Rating
+
+  - term: Pickup Request Number
+    definition: >-
+      A unique identifier (PRN) returned when a UPS pickup is successfully
+      scheduled. Used to cancel or modify the pickup.
+    synonyms:
+      - PRN
+    related:
+      - Pickup
+
+  - term: Customer Integration Environment
+    definition: >-
+      The UPS testing environment (wwwcie.ups.com) where developers can
+      test API integrations using test credentials without creating real shipments.
+    synonyms:
+      - CIE
+    related:
+      - OAuth
+
+  - term: Paperless Trade
+    definition: >-
+      UPS international shipping capability that allows upload of commercial
+      invoices and trade documents electronically, eliminating the need for
+      paper documents attached to international packages.
+    related:
+      - International Shipping
+      - Commercial Invoice
+
+  - term: Billing Weight
+    definition: >-
+      The weight used to calculate shipping charges. For large, lightweight
+      packages, UPS may use dimensional (DIM) weight instead of actual weight
+      if the DIM weight is greater.
+    synonyms:
+      - DIM Weight
+      - Dimensional Weight
+    related:
+      - Rating
+      - Shipment
+
+  - term: Time In Transit
+    definition: >-
+      The number of business days for a UPS shipment to travel from origin
+      to destination for a given service level. Varies by service, origin,
+      and destination.
+    related:
+      - Service Code
+      - Rating
+
+  - term: Void
+    definition: >-
+      The cancellation of a UPS shipment label before the package is physically
+      tendered to UPS. Voiding prevents charges for unshipped labels.
+    related:
+      - Shipment
+
+  - term: OAuth 2.0
+    definition: >-
+      The authentication protocol used by UPS APIs since June 2024, replacing
+      the legacy access key model. Applications obtain a Bearer token using
+      client credentials and use it in the Authorization header.
+    related:
+      - Authentication
+
+  - term: Address Classification
+    definition: >-
+      The UPS Address Validation API response indicating whether an address
+      is Commercial (code 1) or Residential (code 2), used for accurate
+      rate calculation.
+    related:
+      - Address Validation
+      - Residential Address

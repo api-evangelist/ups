@@ -1,0 +1,65 @@
+extends: spectral:oas
+rules:
+  ups-operation-ids-camel-case:
+    description: Operation IDs must use camelCase
+    message: "Operation ID '{{value}}' must be camelCase"
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  ups-summaries-title-case:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' must use Title Case"
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^([A-Z][a-z0-9]* ?)+$"
+
+  ups-bearer-auth-required:
+    description: All non-OAuth operations must use BearerAuth
+    message: "Operation must specify BearerAuth security"
+    severity: warn
+    given: "$.paths[?(!@property.match(/\\/oauth\\/token/))][get,post,delete]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+
+  ups-request-wrappers:
+    description: UPS API requests use PascalCase wrapper objects
+    message: "UPS request bodies typically use PascalCase wrapper properties"
+    severity: info
+    given: "$.paths[*][post,put].requestBody.content.application/json.schema"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+
+  ups-void-uses-delete:
+    description: Void/cancel operations should use DELETE method
+    message: "Void/cancel operations should use DELETE HTTP method"
+    severity: info
+    given: "$.paths[?(@property.match(/void|cancel/))]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [delete]
+
+  ups-tracking-number-path-param:
+    description: Tracking endpoints use path parameters for tracking numbers
+    message: "Tracking endpoint should use path parameter for inquiry/tracking number"
+    severity: info
+    given: "$.paths[?(@property.match(/track/))]"
+    then:
+      function: pattern
+      functionOptions:
+        match: ".*\\{.*\\}.*"
