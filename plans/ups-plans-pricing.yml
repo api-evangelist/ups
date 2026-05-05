@@ -1,0 +1,39 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: UPS
+providerId: ups
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Logistics / Shipping
+  - Enterprise
+  - B2B
+description: UPS does not publish public API pricing. Access is via partner/B2B contracts negotiated through
+  the provider's enterprise sales team. UPS Developer Kit APIs (Shipping, Tracking, Rating, Address Validation)
+  require account; shipping rates per package/zone.
+sources:
+  - https://developer.ups.com/
+plans:
+  - id: ups-partner
+    name: Partner / B2B Contract
+    type: enterprise
+    description: Custom pricing through enterprise sales / partner program.
+    entries:
+      - label: Annual contract (custom)
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: false
+    elements:
+      - name: Negotiated contracts
+      - name: Volume discounts
+      - name: Service-level agreements
+      - name: Dedicated account team
+      - name: 'Partner program: https://developer.ups.com/'
