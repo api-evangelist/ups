@@ -1,247 +1,420 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "UPS Shipping and Logistics"
-  description: >-
-    Workflow capability for UPS shipping and logistics operations, combining
-    rate shopping, shipment creation, package tracking, address validation,
-    pickup scheduling, and transit time estimation into a unified workflow.
-    Designed for e-commerce platforms, shipping operations teams, and
-    logistics integrators.
+  label: UPS Shipping and Logistics
+  description: Workflow capability for UPS shipping and logistics operations, combining rate shopping, shipment creation,
+    package tracking, address validation, pickup scheduling, and transit time estimation into a unified workflow. Designed
+    for e-commerce platforms, shipping operations teams, and logistics integrators.
   tags:
-    - UPS
-    - Shipping
-    - Logistics
-    - E-Commerce
-    - Fulfillment
-    - Tracking
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - UPS
+  - Shipping
+  - Logistics
+  - E-Commerce
+  - Fulfillment
+  - Tracking
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      UPS_CLIENT_ID: UPS_CLIENT_ID
-      UPS_CLIENT_SECRET: UPS_CLIENT_SECRET
-      UPS_ACCOUNT_NUMBER: UPS_ACCOUNT_NUMBER
-
+- namespace: env
+  keys:
+    UPS_CLIENT_ID: UPS_CLIENT_ID
+    UPS_CLIENT_SECRET: UPS_CLIENT_SECRET
+    UPS_ACCOUNT_NUMBER: UPS_ACCOUNT_NUMBER
 capability:
   consumes:
-    - import: ups-shipping
-      location: ./shared/ups-shipping.yaml
-
+  - type: http
+    namespace: ups-shipping
+    baseUri: https://onlinetools.ups.com/api
+    description: UPS REST API for shipping, tracking, and logistics
+    authentication:
+      type: bearer
+      token: '{{UPS_ACCESS_TOKEN}}'
+    resources:
+    - name: rates
+      path: /rating/v1/Shop
+      description: Rate shopping across all UPS services
+      operations:
+      - name: shop-rates
+        method: POST
+        description: Get rates for all UPS services for a shipment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            RateRequest:
+              Shipment:
+                Shipper:
+                  ShipperNumber: '{{tools.accountNumber}}'
+                  Address:
+                    AddressLine:
+                    - '{{tools.originAddress}}'
+                    City: '{{tools.originCity}}'
+                    StateProvinceCode: '{{tools.originState}}'
+                    PostalCode: '{{tools.originPostalCode}}'
+                    CountryCode: '{{tools.originCountryCode}}'
+                ShipTo:
+                  Address:
+                    AddressLine:
+                    - '{{tools.destAddress}}'
+                    City: '{{tools.destCity}}'
+                    StateProvinceCode: '{{tools.destState}}'
+                    PostalCode: '{{tools.destPostalCode}}'
+                    CountryCode: '{{tools.destCountryCode}}'
+                Package:
+                  PackageWeight:
+                    UnitOfMeasurement:
+                      Code: LBS
+                    Weight: '{{tools.weightLbs}}'
+    - name: rate
+      path: /rating/v1/Rate
+      description: Get rate for a specific UPS service
+      operations:
+      - name: get-rate
+        method: POST
+        description: Get rate for a specific service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            RateRequest:
+              Shipment:
+                Service:
+                  Code: '{{tools.serviceCode}}'
+    - name: shipments
+      path: /shipments/v1/ship
+      description: Shipment creation and label generation
+      operations:
+      - name: create-shipment
+        method: POST
+        description: Create shipment and generate label
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            ShipmentRequest:
+              Shipment:
+                Shipper:
+                  ShipperNumber: '{{tools.accountNumber}}'
+                Service:
+                  Code: '{{tools.serviceCode}}'
+    - name: void-shipment
+      path: /shipments/v1/void/cancel/{shipmentIdentificationNumber}
+      description: Void a shipment
+      operations:
+      - name: void-shipment
+        method: DELETE
+        description: Cancel/void a shipment by tracking number
+        inputParameters:
+        - name: shipmentIdentificationNumber
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: tracking
+      path: /track/v1/details/{inquiryNumber}
+      description: Package tracking
+      operations:
+      - name: track-shipment
+        method: GET
+        description: Track a package by tracking number
+        inputParameters:
+        - name: inquiryNumber
+          in: path
+          type: string
+          required: true
+          description: UPS tracking number
+        - name: locale
+          in: query
+          type: string
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: address-validation
+      path: /addressvalidation/v1/1
+      description: Address validation and classification
+      operations:
+      - name: validate-address
+        method: POST
+        description: Validate and classify a shipping address
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            AddressValidationRequest:
+              AddressKeyFormat:
+                AddressLine:
+                - '{{tools.addressLine}}'
+                PoliticalDivision2: '{{tools.city}}'
+                PoliticalDivision1: '{{tools.state}}'
+                PostcodePrimaryLow: '{{tools.postalCode}}'
+                CountryCode: '{{tools.countryCode}}'
+    - name: pickups
+      path: /pickup/v1/pickups
+      description: Pickup scheduling
+      operations:
+      - name: schedule-pickup
+        method: POST
+        description: Schedule a UPS pickup
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            PickupCreationRequest:
+              PickupDateInfo:
+                PickupDate: '{{tools.pickupDate}}'
+                ReadyTime: '{{tools.readyTime}}'
+                CloseTime: '{{tools.closeTime}}'
+    - name: time-in-transit
+      path: /timeintransit/v1/transittimes
+      description: Transit time estimates
+      operations:
+      - name: get-time-in-transit
+        method: POST
+        description: Get transit time estimates by service
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            originCountryCode: '{{tools.originCountryCode}}'
+            originPostalCode: '{{tools.originPostalCode}}'
+            destinationCountryCode: '{{tools.destCountryCode}}'
+            destinationPostalCode: '{{tools.destPostalCode}}'
+            weight: '{{tools.weightLbs}}'
+            weightUnitOfMeasure: LBS
+            shipDate: '{{tools.shipDate}}'
   exposes:
-    - type: rest
-      port: 8080
-      namespace: ups-logistics-api
-      description: "Unified REST API for UPS shipping and logistics workflows."
-      resources:
-        - path: /v1/rates
-          name: rates
-          description: "Shipping rate comparison"
-          operations:
-            - method: POST
-              name: shop-rates
-              description: "Compare rates across all UPS services"
-              call: "ups-shipping.shop-rates"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/rate
-          name: rate
-          description: "Single service rate"
-          operations:
-            - method: POST
-              name: get-rate
-              description: "Get rate for a specific service"
-              call: "ups-shipping.get-rate"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/shipments
-          name: shipments
-          description: "Shipment creation"
-          operations:
-            - method: POST
-              name: create-shipment
-              description: "Create shipment and generate label"
-              call: "ups-shipping.create-shipment"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/shipments/{trackingNumber}
-          name: shipment
-          description: "Shipment void"
-          operations:
-            - method: DELETE
-              name: void-shipment
-              description: "Void/cancel a shipment"
-              call: "ups-shipping.void-shipment"
-              with:
-                shipmentIdentificationNumber: "rest.trackingNumber"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/tracking/{inquiryNumber}
-          name: tracking
-          description: "Package tracking"
-          operations:
-            - method: GET
-              name: track-shipment
-              description: "Track a package by tracking number"
-              call: "ups-shipping.track-shipment"
-              with:
-                inquiryNumber: "rest.inquiryNumber"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/address-validation
-          name: address-validation
-          description: "Address validation"
-          operations:
-            - method: POST
-              name: validate-address
-              description: "Validate a shipping address"
-              call: "ups-shipping.validate-address"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/pickups
-          name: pickups
-          description: "Pickup scheduling"
-          operations:
-            - method: POST
-              name: schedule-pickup
-              description: "Schedule a UPS pickup"
-              call: "ups-shipping.schedule-pickup"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/pickups/{prn}
-          name: pickup
-          description: "Pickup cancellation"
-          operations:
-            - method: DELETE
-              name: cancel-pickup
-              description: "Cancel a scheduled pickup"
-              call: "ups-shipping.cancel-pickup"
-              with:
-                prn: "rest.prn"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/transit-times
-          name: transit-times
-          description: "Transit time estimates"
-          operations:
-            - method: POST
-              name: get-time-in-transit
-              description: "Get transit time estimates by service"
-              call: "ups-shipping.get-time-in-transit"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: ups-logistics-mcp
-      transport: http
-      description: "MCP server for AI-assisted UPS shipping and logistics workflows."
-      tools:
-        - name: shop-rates
-          description: "Compare shipping rates across all available UPS services for a shipment"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "ups-shipping.shop-rates"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-rate
-          description: "Get the rate for a specific UPS service level"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "ups-shipping.get-rate"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: create-shipment
-          description: "Create a UPS shipment and generate a shipping label"
-          hints:
-            readOnly: false
-            openWorld: false
-          call: "ups-shipping.create-shipment"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: void-shipment
-          description: "Void/cancel a UPS shipment before it is tendered"
-          hints:
-            readOnly: false
-            destructive: true
-            idempotent: true
-          call: "ups-shipping.void-shipment"
-          with:
-            shipmentIdentificationNumber: "tools.trackingNumber"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: track-shipment
-          description: "Track a UPS package by tracking number for real-time status"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "ups-shipping.track-shipment"
-          with:
-            inquiryNumber: "tools.inquiryNumber"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: validate-address
-          description: "Validate a shipping address and classify as residential or commercial"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "ups-shipping.validate-address"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: schedule-pickup
-          description: "Schedule a UPS pickup for one or more packages"
-          hints:
-            readOnly: false
-            openWorld: false
-          call: "ups-shipping.schedule-pickup"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: cancel-pickup
-          description: "Cancel a previously scheduled UPS pickup"
-          hints:
-            readOnly: false
-            destructive: true
-            idempotent: true
-          call: "ups-shipping.cancel-pickup"
-          with:
-            prn: "tools.prn"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-time-in-transit
-          description: "Get estimated transit days for UPS services between two locations"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "ups-shipping.get-time-in-transit"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: ups-logistics-api
+    description: Unified REST API for UPS shipping and logistics workflows.
+    resources:
+    - path: /v1/rates
+      name: rates
+      description: Shipping rate comparison
+      operations:
+      - method: POST
+        name: shop-rates
+        description: Compare rates across all UPS services
+        call: ups-shipping.shop-rates
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/rate
+      name: rate
+      description: Single service rate
+      operations:
+      - method: POST
+        name: get-rate
+        description: Get rate for a specific service
+        call: ups-shipping.get-rate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/shipments
+      name: shipments
+      description: Shipment creation
+      operations:
+      - method: POST
+        name: create-shipment
+        description: Create shipment and generate label
+        call: ups-shipping.create-shipment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/shipments/{trackingNumber}
+      name: shipment
+      description: Shipment void
+      operations:
+      - method: DELETE
+        name: void-shipment
+        description: Void/cancel a shipment
+        call: ups-shipping.void-shipment
+        with:
+          shipmentIdentificationNumber: rest.trackingNumber
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/tracking/{inquiryNumber}
+      name: tracking
+      description: Package tracking
+      operations:
+      - method: GET
+        name: track-shipment
+        description: Track a package by tracking number
+        call: ups-shipping.track-shipment
+        with:
+          inquiryNumber: rest.inquiryNumber
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/address-validation
+      name: address-validation
+      description: Address validation
+      operations:
+      - method: POST
+        name: validate-address
+        description: Validate a shipping address
+        call: ups-shipping.validate-address
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/pickups
+      name: pickups
+      description: Pickup scheduling
+      operations:
+      - method: POST
+        name: schedule-pickup
+        description: Schedule a UPS pickup
+        call: ups-shipping.schedule-pickup
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/pickups/{prn}
+      name: pickup
+      description: Pickup cancellation
+      operations:
+      - method: DELETE
+        name: cancel-pickup
+        description: Cancel a scheduled pickup
+        call: ups-shipping.cancel-pickup
+        with:
+          prn: rest.prn
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/transit-times
+      name: transit-times
+      description: Transit time estimates
+      operations:
+      - method: POST
+        name: get-time-in-transit
+        description: Get transit time estimates by service
+        call: ups-shipping.get-time-in-transit
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: ups-logistics-mcp
+    transport: http
+    description: MCP server for AI-assisted UPS shipping and logistics workflows.
+    tools:
+    - name: shop-rates
+      description: Compare shipping rates across all available UPS services for a shipment
+      hints:
+        readOnly: true
+        openWorld: true
+      call: ups-shipping.shop-rates
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-rate
+      description: Get the rate for a specific UPS service level
+      hints:
+        readOnly: true
+        openWorld: true
+      call: ups-shipping.get-rate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-shipment
+      description: Create a UPS shipment and generate a shipping label
+      hints:
+        readOnly: false
+        openWorld: false
+      call: ups-shipping.create-shipment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: void-shipment
+      description: Void/cancel a UPS shipment before it is tendered
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: ups-shipping.void-shipment
+      with:
+        shipmentIdentificationNumber: tools.trackingNumber
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: track-shipment
+      description: Track a UPS package by tracking number for real-time status
+      hints:
+        readOnly: true
+        openWorld: true
+      call: ups-shipping.track-shipment
+      with:
+        inquiryNumber: tools.inquiryNumber
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: validate-address
+      description: Validate a shipping address and classify as residential or commercial
+      hints:
+        readOnly: true
+        openWorld: true
+      call: ups-shipping.validate-address
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: schedule-pickup
+      description: Schedule a UPS pickup for one or more packages
+      hints:
+        readOnly: false
+        openWorld: false
+      call: ups-shipping.schedule-pickup
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancel-pickup
+      description: Cancel a previously scheduled UPS pickup
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: ups-shipping.cancel-pickup
+      with:
+        prn: tools.prn
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-time-in-transit
+      description: Get estimated transit days for UPS services between two locations
+      hints:
+        readOnly: true
+        openWorld: true
+      call: ups-shipping.get-time-in-transit
+      outputParameters:
+      - type: object
+        mapping: $.
