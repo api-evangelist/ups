@@ -17,7 +17,7 @@ apis:
     properties:
       - type: Documentation
         url: https://developer.ups.com/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://developer.ups.com/get-started
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/openapi/ups-shipping-openapi.yml
@@ -44,7 +44,7 @@ common:
     url: https://developer.ups.com
   - type: API Catalog
     url: https://developer.ups.com/catalog
-  - type: Getting Started
+  - type: GettingStarted
     url: https://developer.ups.com/get-started
   - type: Features
     data:
