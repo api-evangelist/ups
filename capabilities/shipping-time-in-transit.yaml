@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UPS Shipping API — Time In Transit
+  description: 'UPS Shipping API — Time In Transit. 1 operations. Lead operation: Get Time In Transit. Self-contained Naftiko
+    capability covering one Ups business surface.'
+  tags:
+  - Ups
+  - Time In Transit
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UPS_API_KEY: UPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: shipping-time-in-transit
+    baseUri: https://onlinetools.ups.com/api
+    description: UPS Shipping API — Time In Transit business capability. Self-contained, no shared references.
+    resources:
+    - name: timeintransit-v1-transittimes
+      path: /timeintransit/v1/transittimes
+      operations:
+      - name: gettimeintransit
+        method: POST
+        description: Get Time In Transit
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: shipping-time-in-transit-rest
+    port: 8080
+    description: REST adapter for UPS Shipping API — Time In Transit. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/timeintransit/v1/transittimes
+      name: timeintransit-v1-transittimes
+      description: REST surface for timeintransit-v1-transittimes.
+      operations:
+      - method: POST
+        name: gettimeintransit
+        description: Get Time In Transit
+        call: shipping-time-in-transit.gettimeintransit
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: shipping-time-in-transit-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UPS Shipping API — Time In Transit. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: get-time-transit
+      description: Get Time In Transit
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: shipping-time-in-transit.gettimeintransit
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

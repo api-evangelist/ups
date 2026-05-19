@@ -1,0 +1,98 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UPS Shipping API — Tracking
+  description: 'UPS Shipping API — Tracking. 1 operations. Lead operation: Track Shipment. Self-contained Naftiko capability
+    covering one Ups business surface.'
+  tags:
+  - Ups
+  - Tracking
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UPS_API_KEY: UPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: shipping-tracking
+    baseUri: https://onlinetools.ups.com/api
+    description: UPS Shipping API — Tracking business capability. Self-contained, no shared references.
+    resources:
+    - name: track-v1-details-inquiryNumber
+      path: /track/v1/details/{inquiryNumber}
+      operations:
+      - name: trackshipment
+        method: GET
+        description: Track Shipment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: inquiryNumber
+          in: path
+          type: string
+          description: UPS tracking number (1Z...) or shipment reference number
+          required: true
+        - name: locale
+          in: query
+          type: string
+          description: Locale for response messages
+        - name: returnSignature
+          in: query
+          type: string
+          description: Include delivery signature image if available
+        - name: returnMilestones
+          in: query
+          type: string
+          description: Include delivery milestone tracking
+    authentication:
+      type: bearer
+      token: '{{env.UPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: shipping-tracking-rest
+    port: 8080
+    description: REST adapter for UPS Shipping API — Tracking. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/track/v1/details/{inquirynumber}
+      name: track-v1-details-inquirynumber
+      description: REST surface for track-v1-details-inquiryNumber.
+      operations:
+      - method: GET
+        name: trackshipment
+        description: Track Shipment
+        call: shipping-tracking.trackshipment
+        with:
+          inquiryNumber: rest.inquiryNumber
+          locale: rest.locale
+          returnSignature: rest.returnSignature
+          returnMilestones: rest.returnMilestones
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: shipping-tracking-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UPS Shipping API — Tracking. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: track-shipment
+      description: Track Shipment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: shipping-tracking.trackshipment
+      with:
+        inquiryNumber: tools.inquiryNumber
+        locale: tools.locale
+        returnSignature: tools.returnSignature
+        returnMilestones: tools.returnMilestones
+      outputParameters:
+      - type: object
+        mapping: $.

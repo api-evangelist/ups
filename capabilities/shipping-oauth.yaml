@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UPS Shipping API — OAuth
+  description: 'UPS Shipping API — OAuth. 1 operations. Lead operation: Get OAuth Token. Self-contained Naftiko capability
+    covering one Ups business surface.'
+  tags:
+  - Ups
+  - OAuth
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UPS_API_KEY: UPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: shipping-oauth
+    baseUri: https://onlinetools.ups.com/api
+    description: UPS Shipping API — OAuth business capability. Self-contained, no shared references.
+    resources:
+    - name: security-v1-oauth-token
+      path: /security/v1/oauth/token
+      operations:
+      - name: getoauthtoken
+        method: POST
+        description: Get OAuth Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: shipping-oauth-rest
+    port: 8080
+    description: REST adapter for UPS Shipping API — OAuth. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/security/v1/oauth/token
+      name: security-v1-oauth-token
+      description: REST surface for security-v1-oauth-token.
+      operations:
+      - method: POST
+        name: getoauthtoken
+        description: Get OAuth Token
+        call: shipping-oauth.getoauthtoken
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: shipping-oauth-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UPS Shipping API — OAuth. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-oauth-token
+      description: Get OAuth Token
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: shipping-oauth.getoauthtoken
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

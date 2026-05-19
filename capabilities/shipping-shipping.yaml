@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UPS Shipping API — Shipping
+  description: 'UPS Shipping API — Shipping. 2 operations. Lead operation: Create Shipment. Self-contained Naftiko capability
+    covering one Ups business surface.'
+  tags:
+  - Ups
+  - Shipping
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UPS_API_KEY: UPS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: shipping-shipping
+    baseUri: https://onlinetools.ups.com/api
+    description: UPS Shipping API — Shipping business capability. Self-contained, no shared references.
+    resources:
+    - name: shipments-v1-ship
+      path: /shipments/v1/ship
+      operations:
+      - name: createshipment
+        method: POST
+        description: Create Shipment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: shipments-v1-void-cancel-shipmentIdentificationNumber
+      path: /shipments/v1/void/cancel/{shipmentIdentificationNumber}
+      operations:
+      - name: voidshipment
+        method: DELETE
+        description: Void Shipment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: shipmentIdentificationNumber
+          in: path
+          type: string
+          description: UPS tracking number / shipment identification number
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UPS_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: shipping-shipping-rest
+    port: 8080
+    description: REST adapter for UPS Shipping API — Shipping. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/shipments/v1/ship
+      name: shipments-v1-ship
+      description: REST surface for shipments-v1-ship.
+      operations:
+      - method: POST
+        name: createshipment
+        description: Create Shipment
+        call: shipping-shipping.createshipment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/shipments/v1/void/cancel/{shipmentidentificationnumber}
+      name: shipments-v1-void-cancel-shipmentidentificationnumber
+      description: REST surface for shipments-v1-void-cancel-shipmentIdentificationNumber.
+      operations:
+      - method: DELETE
+        name: voidshipment
+        description: Void Shipment
+        call: shipping-shipping.voidshipment
+        with:
+          shipmentIdentificationNumber: rest.shipmentIdentificationNumber
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: shipping-shipping-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UPS Shipping API — Shipping. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: create-shipment
+      description: Create Shipment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: shipping-shipping.createshipment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: void-shipment
+      description: Void Shipment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: shipping-shipping.voidshipment
+      with:
+        shipmentIdentificationNumber: tools.shipmentIdentificationNumber
+      outputParameters:
+      - type: object
+        mapping: $.
