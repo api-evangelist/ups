@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CancelPickupResponse",
+  "title": "CancelPickupResponse",
+  "type": "object",
+  "properties": {
+    "PickupCancelResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

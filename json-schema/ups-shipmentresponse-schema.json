@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ShipmentResponse",
+  "title": "ShipmentResponse",
+  "type": "object",
+  "properties": {
+    "ShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "type": "object"
+        },
+        "ShipmentResults": {
+          "type": "object",
+          "properties": {
+            "ShipmentIdentificationNumber": {
+              "type": "string",
+              "description": "UPS tracking number"
+            },
+            "PackageResults": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "TrackingNumber": {
+                    "type": "string"
+                  },
+                  "ShippingLabel": {
+                    "type": "object",
+                    "properties": {
+                      "ImageFormat": {
+                        "type": "object",
+                        "properties": {
+                          "Code": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "GraphicImage": {
+                        "type": "string",
+                        "description": "Base64-encoded label image"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "BillingWeight": {
+              "type": "object",
+              "properties": {
+                "UnitOfMeasurement": {
+                  "type": "object",
+                  "properties": {
+                    "Code": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "Weight": {
+                  "type": "string"
+                }
+              }
+            },
+            "ShipmentCharges": {
+              "type": "object",
+              "properties": {
+                "TotalCharges": {
+                  "type": "object",
+                  "properties": {
+                    "CurrencyCode": {
+                      "type": "string"
+                    },
+                    "MonetaryValue": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

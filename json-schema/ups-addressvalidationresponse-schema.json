@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AddressValidationResponse",
+  "title": "AddressValidationResponse",
+  "type": "object",
+  "properties": {
+    "AddressValidationResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "type": "object"
+        },
+        "AddressClassification": {
+          "type": "object",
+          "properties": {
+            "Code": {
+              "type": "string",
+              "enum": [
+                "0",
+                "1",
+                "2"
+              ],
+              "description": "0=Unknown, 1=Commercial, 2=Residential"
+            },
+            "Description": {
+              "type": "string"
+            }
+          }
+        },
+        "AddressKeyFormat": {
+          "type": "object",
+          "properties": {
+            "AddressLine": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "PoliticalDivision2": {
+              "type": "string"
+            },
+            "PoliticalDivision1": {
+              "type": "string"
+            },
+            "PostcodePrimaryLow": {
+              "type": "string"
+            },
+            "PostcodeExtendedLow": {
+              "type": "string"
+            },
+            "CountryCode": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

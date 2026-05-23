@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/VoidResponse",
+  "title": "VoidResponse",
+  "type": "object",
+  "properties": {
+    "VoidShipmentResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "type": "object"
+        },
+        "SummaryResult": {
+          "type": "object",
+          "properties": {
+            "Status": {
+              "type": "object",
+              "properties": {
+                "Code": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

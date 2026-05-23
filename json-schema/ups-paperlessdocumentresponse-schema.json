@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PaperlessDocumentResponse",
+  "title": "PaperlessDocumentResponse",
+  "type": "object",
+  "properties": {
+    "UploadResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "type": "object"
+        },
+        "FormsHistoryDocumentID": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "DocumentID": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

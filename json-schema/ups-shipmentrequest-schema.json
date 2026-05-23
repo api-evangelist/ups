@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ShipmentRequest",
+  "title": "ShipmentRequest",
+  "type": "object",
+  "required": [
+    "ShipmentRequest"
+  ],
+  "properties": {
+    "ShipmentRequest": {
+      "type": "object",
+      "properties": {
+        "Request": {
+          "type": "object",
+          "properties": {
+            "RequestOption": {
+              "type": "string",
+              "enum": [
+                "validate",
+                "nonvalidate"
+              ]
+            }
+          }
+        },
+        "Shipment": {
+          "type": "object",
+          "properties": {
+            "Shipper": {
+              "$ref": "#/components/schemas/ShipperInfo"
+            },
+            "ShipTo": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "AttentionName": {
+                  "type": "string"
+                },
+                "Phone": {
+                  "type": "object",
+                  "properties": {
+                    "Number": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "Address": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            },
+            "Service": {
+              "$ref": "#/components/schemas/ServiceCode"
+            },
+            "Package": {
+              "$ref": "#/components/schemas/PackageInfo"
+            }
+          }
+        },
+        "LabelSpecification": {
+          "type": "object",
+          "properties": {
+            "LabelImageFormat": {
+              "type": "object",
+              "properties": {
+                "Code": {
+                  "type": "string",
+                  "enum": [
+                    "GIF",
+                    "EPL",
+                    "ZPL",
+                    "PNG"
+                  ]
+                }
+              }
+            },
+            "LabelStockSize": {
+              "type": "object",
+              "properties": {
+                "Height": {
+                  "type": "string"
+                },
+                "Width": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

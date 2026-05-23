@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/AddressValidationRequest",
+  "title": "AddressValidationRequest",
+  "type": "object",
+  "required": [
+    "AddressValidationRequest"
+  ],
+  "properties": {
+    "AddressValidationRequest": {
+      "type": "object",
+      "properties": {
+        "Request": {
+          "type": "object",
+          "properties": {
+            "RequestOption": {
+              "type": "string",
+              "enum": [
+                "1",
+                "2",
+                "3"
+              ],
+              "description": "1=Address Validation, 2=Address Classification, 3=Both"
+            }
+          }
+        },
+        "AddressKeyFormat": {
+          "type": "object",
+          "required": [
+            "CountryCode"
+          ],
+          "properties": {
+            "ConsigneeName": {
+              "type": "string"
+            },
+            "AddressLine": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "PoliticalDivision2": {
+              "type": "string",
+              "description": "City"
+            },
+            "PoliticalDivision1": {
+              "type": "string",
+              "description": "State/Province"
+            },
+            "PostcodePrimaryLow": {
+              "type": "string",
+              "description": "ZIP/Postal code"
+            },
+            "CountryCode": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

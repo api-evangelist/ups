@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PackageInfo",
+  "title": "PackageInfo",
+  "type": "object",
+  "properties": {
+    "PackagingType": {
+      "type": "object",
+      "properties": {
+        "Code": {
+          "type": "string",
+          "description": "02 = customer supplied package"
+        }
+      }
+    },
+    "Dimensions": {
+      "type": "object",
+      "properties": {
+        "UnitOfMeasurement": {
+          "type": "object",
+          "properties": {
+            "Code": {
+              "type": "string",
+              "enum": [
+                "IN",
+                "CM"
+              ]
+            }
+          }
+        },
+        "Length": {
+          "type": "string"
+        },
+        "Width": {
+          "type": "string"
+        },
+        "Height": {
+          "type": "string"
+        }
+      }
+    },
+    "PackageWeight": {
+      "type": "object",
+      "properties": {
+        "UnitOfMeasurement": {
+          "type": "object",
+          "properties": {
+            "Code": {
+              "type": "string",
+              "enum": [
+                "LBS",
+                "KGS"
+              ]
+            }
+          }
+        },
+        "Weight": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

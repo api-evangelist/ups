@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PickupRequest",
+  "title": "PickupRequest",
+  "type": "object",
+  "properties": {
+    "PickupCreationRequest": {
+      "type": "object",
+      "properties": {
+        "RatePickupIndicator": {
+          "type": "string",
+          "enum": [
+            "Y",
+            "N"
+          ]
+        },
+        "Shipper": {
+          "type": "object",
+          "properties": {
+            "Account": {
+              "type": "object",
+              "properties": {
+                "AccountNumber": {
+                  "type": "string"
+                },
+                "AccountCountryCode": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "PickupDateInfo": {
+          "type": "object",
+          "properties": {
+            "CloseTime": {
+              "type": "string",
+              "description": "Latest pickup time (HHMM)"
+            },
+            "ReadyTime": {
+              "type": "string",
+              "description": "Earliest ready time (HHMM)"
+            },
+            "PickupDate": {
+              "type": "string",
+              "description": "Pickup date (YYYYMMDD)"
+            }
+          }
+        },
+        "PickupAddress": {
+          "type": "object",
+          "properties": {
+            "CompanyName": {
+              "type": "string"
+            },
+            "ContactName": {
+              "type": "string"
+            },
+            "AddressLine": {
+              "type": "string"
+            },
+            "City": {
+              "type": "string"
+            },
+            "StateProvince": {
+              "type": "string"
+            },
+            "PostalCode": {
+              "type": "string"
+            },
+            "CountryCode": {
+              "type": "string"
+            },
+            "ResidentialIndicator": {
+              "type": "string",
+              "enum": [
+                "Y",
+                "N"
+              ]
+            }
+          }
+        },
+        "OverweightIndicator": {
+          "type": "string",
+          "enum": [
+            "Y",
+            "N"
+          ]
+        },
+        "PaymentMethod": {
+          "type": "string",
+          "enum": [
+            "01"
+          ],
+          "description": "01 = Account"
+        }
+      }
+    }
+  }
+}

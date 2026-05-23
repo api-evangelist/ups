@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TrackResponse",
+  "title": "TrackResponse",
+  "type": "object",
+  "properties": {
+    "trackResponse": {
+      "type": "object",
+      "properties": {
+        "shipment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "inquiryNumber": {
+                "type": "string"
+              },
+              "package": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "trackingNumber": {
+                      "type": "string"
+                    },
+                    "currentStatus": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "simplifiedTextDescription": {
+                          "type": "string"
+                        },
+                        "statusCode": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "deliveryDate": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "activity": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "location": {
+                            "type": "object",
+                            "properties": {
+                              "address": {
+                                "$ref": "#/components/schemas/Address"
+                              }
+                            }
+                          },
+                          "status": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "date": {
+                            "type": "string"
+                          },
+                          "time": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

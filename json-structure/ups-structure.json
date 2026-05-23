@@ -1,0 +1,247 @@
+{
+  "provider": "UPS",
+  "providerId": "ups",
+  "kind": "json-structure",
+  "description": "Structural overview of the UPS API surface; extracted from openapi/.",
+  "schemaCount": 21,
+  "operationCount": 11,
+  "schemas": [
+    {
+      "name": "OAuthTokenResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "ErrorResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "Address",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "ShipperInfo",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "Name",
+        "ShipperNumber",
+        "Address"
+      ]
+    },
+    {
+      "name": "PackageInfo",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "ServiceCode",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "RateRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "RateRequest"
+      ]
+    },
+    {
+      "name": "RateResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "ShipmentRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "ShipmentRequest"
+      ]
+    },
+    {
+      "name": "ShipmentResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "VoidResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "TrackResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "AddressValidationRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "AddressValidationRequest"
+      ]
+    },
+    {
+      "name": "AddressValidationResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "PickupRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "PickupResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "CancelPickupResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "TimeInTransitRequest",
+      "type": "object",
+      "propertyCount": 13,
+      "required": []
+    },
+    {
+      "name": "TimeInTransitResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "PaperlessDocumentRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "PaperlessDocumentResponse",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/security/v1/oauth/token",
+      "operationId": "getOAuthToken",
+      "summary": "Get OAuth Token",
+      "tags": [
+        "OAuth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rating/v1/Shop",
+      "operationId": "shopRates",
+      "summary": "Shop Rates",
+      "tags": [
+        "Rating"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/rating/v1/Rate",
+      "operationId": "getRate",
+      "summary": "Get Rate",
+      "tags": [
+        "Rating"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/shipments/v1/ship",
+      "operationId": "createShipment",
+      "summary": "Create Shipment",
+      "tags": [
+        "Shipping"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/shipments/v1/void/cancel/{shipmentIdentificationNumber}",
+      "operationId": "voidShipment",
+      "summary": "Void Shipment",
+      "tags": [
+        "Shipping"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/track/v1/details/{inquiryNumber}",
+      "operationId": "trackShipment",
+      "summary": "Track Shipment",
+      "tags": [
+        "Tracking"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/addressvalidation/v1/1",
+      "operationId": "validateAddressStreetLevel",
+      "summary": "Validate Address Street Level",
+      "tags": [
+        "Address Validation"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/pickup/v1/pickups",
+      "operationId": "schedulePickup",
+      "summary": "Schedule Pickup",
+      "tags": [
+        "Pickup"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/pickup/v1/pickups/{prn}",
+      "operationId": "cancelPickup",
+      "summary": "Cancel Pickup",
+      "tags": [
+        "Pickup"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/timeintransit/v1/transittimes",
+      "operationId": "getTimeInTransit",
+      "summary": "Get Time In Transit",
+      "tags": [
+        "Time In Transit"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/paperlessdocuments/v1/upload/{shipperNumber}",
+      "operationId": "uploadPaperlessDocument",
+      "summary": "Upload Paperless Document",
+      "tags": [
+        "Paperless Documents"
+      ]
+    }
+  ]
+}

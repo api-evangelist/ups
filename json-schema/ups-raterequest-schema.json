@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RateRequest",
+  "title": "RateRequest",
+  "type": "object",
+  "required": [
+    "RateRequest"
+  ],
+  "properties": {
+    "RateRequest": {
+      "type": "object",
+      "required": [
+        "Shipment"
+      ],
+      "properties": {
+        "PickupType": {
+          "type": "object",
+          "properties": {
+            "Code": {
+              "type": "string"
+            }
+          }
+        },
+        "Shipment": {
+          "type": "object",
+          "properties": {
+            "Shipper": {
+              "$ref": "#/components/schemas/ShipperInfo"
+            },
+            "ShipTo": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Address": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            },
+            "ShipFrom": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Address": {
+                  "$ref": "#/components/schemas/Address"
+                }
+              }
+            },
+            "Service": {
+              "$ref": "#/components/schemas/ServiceCode"
+            },
+            "Package": {
+              "$ref": "#/components/schemas/PackageInfo"
+            }
+          }
+        }
+      }
+    }
+  }
+}

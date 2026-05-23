@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ServiceCode",
+  "title": "ServiceCode",
+  "type": "object",
+  "properties": {
+    "Code": {
+      "type": "string",
+      "description": "UPS service codes:\n01=Next Day Air, 02=2nd Day Air, 03=Ground,\n07=World Wide Express, 08=World Wide Expedited,\n11=Standard, 12=3 Day Select, 13=Next Day Air Saver,\n14=Next Day Air Early AM, 54=Worldwide Express Plus,\n59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,\n83=Today Dedicated Courier, 84=Today Intercity,\n85=Today Express, 86=Today Express Saver\n"
+    },
+    "Description": {
+      "type": "string"
+    }
+  }
+}

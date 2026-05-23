@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PaperlessDocumentRequest",
+  "title": "PaperlessDocumentRequest",
+  "type": "object",
+  "properties": {
+    "UploadRequest": {
+      "type": "object",
+      "properties": {
+        "Request": {
+          "type": "object"
+        },
+        "UserCreatedForm": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "UserCreatedFormFileName": {
+                "type": "string"
+              },
+              "UserCreatedFormFile": {
+                "type": "string",
+                "description": "Base64-encoded document content"
+              },
+              "UserCreatedFormFileFormat": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "string",
+                    "enum": [
+                      "pdf",
+                      "gif",
+                      "jpg",
+                      "doc",
+                      "docx"
+                    ]
+                  }
+                }
+              },
+              "UserCreatedFormDocumentType": {
+                "type": "object",
+                "properties": {
+                  "Code": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

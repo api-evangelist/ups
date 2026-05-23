@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PickupResponse",
+  "title": "PickupResponse",
+  "type": "object",
+  "properties": {
+    "PickupCreationResponse": {
+      "type": "object",
+      "properties": {
+        "PRN": {
+          "type": "string",
+          "description": "Pickup request number"
+        },
+        "RateStatus": {
+          "type": "object",
+          "properties": {
+            "Code": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

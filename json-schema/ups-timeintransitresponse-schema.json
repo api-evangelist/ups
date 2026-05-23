@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/TimeInTransitResponse",
+  "title": "TimeInTransitResponse",
+  "type": "object",
+  "properties": {
+    "validationList": {
+      "type": "object"
+    },
+    "destinationPickList": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "emsResponse": {
+      "type": "object",
+      "properties": {
+        "shipDate": {
+          "type": "string"
+        },
+        "shipTime": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "serviceLevel": {
+                "type": "string"
+              },
+              "serviceLevelDescription": {
+                "type": "string"
+              },
+              "deliveryDate": {
+                "type": "string"
+              },
+              "deliveryTime": {
+                "type": "string"
+              },
+              "commitTime": {
+                "type": "string"
+              },
+              "businessTransitDays": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

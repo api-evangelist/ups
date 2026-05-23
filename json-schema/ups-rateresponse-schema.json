@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RateResponse",
+  "title": "RateResponse",
+  "type": "object",
+  "properties": {
+    "RateResponse": {
+      "type": "object",
+      "properties": {
+        "Response": {
+          "type": "object",
+          "properties": {
+            "ResponseStatus": {
+              "type": "object",
+              "properties": {
+                "Code": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "RatedShipment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Service": {
+                "$ref": "#/components/schemas/ServiceCode"
+              },
+              "TotalCharges": {
+                "type": "object",
+                "properties": {
+                  "CurrencyCode": {
+                    "type": "string"
+                  },
+                  "MonetaryValue": {
+                    "type": "string"
+                  }
+                }
+              },
+              "GuaranteedDelivery": {
+                "type": "object",
+                "properties": {
+                  "BusinessDaysInTransit": {
+                    "type": "string"
+                  },
+                  "DeliveryByTime": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

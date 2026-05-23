@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OAuthTokenResponse",
+  "title": "OAuthTokenResponse",
+  "type": "object",
+  "properties": {
+    "token_type": {
+      "type": "string",
+      "example": "Bearer"
+    },
+    "issued_at": {
+      "type": "string"
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "access_token": {
+      "type": "string",
+      "description": "Bearer token for API authorization"
+    },
+    "expires_in": {
+      "type": "string",
+      "example": "14399"
+    },
+    "status": {
+      "type": "string",
+      "example": "approved"
+    }
+  }
+}
