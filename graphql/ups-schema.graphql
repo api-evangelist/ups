@@ -1,0 +1,1095 @@
+"""
+UPS GraphQL Schema
+Provider: UPS (United Parcel Service)
+Source: UPS Developer Kit REST API (https://developer.ups.com/)
+GitHub: https://github.com/UPS-API
+Base URL: https://onlinetools.ups.com/api
+Auth: OAuth 2.0 (client credentials / authorization code)
+"""
+
+# ─────────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar Date
+scalar JSON
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum WeightUnit {
+  LBS
+  KGS
+  OZS
+}
+
+enum DimensionUnit {
+  IN
+  CM
+}
+
+enum LabelFormatCode {
+  GIF
+  HTML
+  EPL
+  ZPL
+  SPL
+  STARPL
+}
+
+enum LabelMethodCode {
+  PRINT
+  ELECTRONIC_RETURN_LABEL
+  PRINT_AND_MAIL
+  NONE
+}
+
+enum SignatureTypeCode {
+  NO_SIGNATURE_REQUIRED
+  SIGNATURE_REQUIRED
+  ADULT_SIGNATURE_REQUIRED
+  DIRECT_DELIVERY_ONLY
+}
+
+enum CODPaymentTypeCode {
+  CHECK
+  MONEY_ORDER
+  CASHIER_CHECK
+}
+
+enum TrackingStatusType {
+  IN_TRANSIT
+  DELIVERED
+  EXCEPTION
+  PICKUP
+  MANIFEST_PICKUP
+  OUT_FOR_DELIVERY
+  DEPARTURE_SCAN
+  ARRIVAL_SCAN
+  DESTINATION_SCAN
+  EXPORT_SCAN
+  IMPORT_SCAN
+}
+
+enum ReturnServiceCode {
+  RS1   # UPS Print Return Label
+  RS3   # UPS Print and Mail Return Label
+  RS4   # UPS Electronic Return Label
+  RS8   # UPS Returns Exchange
+  RS9   # UPS Returns Pack and Collect
+}
+
+enum SurchargeTypeCode {
+  RESIDENTIAL_ADDRESS
+  DELIVERY_AREA
+  EXTENDED_DELIVERY_AREA
+  FUEL
+  ADDITIONAL_HANDLING
+  PEAK
+  LARGE_PACKAGE
+  OVERSIZE
+  ADDRESS_CORRECTION
+  SATURDAY_DELIVERY
+  SATURDAY_PICKUP
+  HAZARDOUS_MATERIALS
+}
+
+enum ServiceTypeCode {
+  S01  # UPS Next Day Air
+  S02  # UPS 2nd Day Air
+  S03  # UPS Ground
+  S07  # UPS Worldwide Express
+  S08  # UPS Worldwide Expedited
+  S11  # UPS Standard
+  S12  # UPS 3 Day Select
+  S13  # UPS Next Day Air Saver
+  S14  # UPS Next Day Air Early
+  S54  # UPS Worldwide Express Plus
+  S59  # UPS 2nd Day Air A.M.
+  S65  # UPS Worldwide Saver
+  S96  # UPS Worldwide Express Freight
+}
+
+enum PackagingTypeCode {
+  PT00  # Unknown
+  PT01  # UPS Letter
+  PT02  # Customer Supplied Package
+  PT03  # Tube
+  PT04  # PAK
+  PT21  # UPS Express Box
+  PT24  # UPS 25KG Box
+  PT25  # UPS 10KG Box
+  PT30  # Pallet
+  PT2A  # Small Express Box
+  PT2B  # Medium Express Box
+  PT2C  # Large Express Box
+}
+
+enum QVSubscriptionFileType {
+  MANIFEST
+  DELIVERY
+  EXCEPTION
+  ORIGIN
+  RETURN
+  FREIGHT
+}
+
+# ─────────────────────────────────────────────
+# General / Shared Types
+# ─────────────────────────────────────────────
+
+"""A monetary value with currency."""
+type Money {
+  currencyCode: String!
+  monetaryValue: Float!
+}
+
+"""Physical weight."""
+type Weight {
+  unitOfMeasurement: WeightUnit!
+  weight: Float!
+}
+
+"""Physical dimensions."""
+type Dimensions {
+  unitOfMeasurement: DimensionUnit!
+  length: Float!
+  width: Float!
+  height: Float!
+}
+
+"""A generic key-value indicator."""
+type IndicatorType {
+  code: String
+  description: String
+}
+
+"""A generic reference number attached to a shipment or package."""
+type ReferenceNumber {
+  value: String!
+  barCodeIndicator: String
+}
+
+# ─────────────────────────────────────────────
+# Address & Contact
+# ─────────────────────────────────────────────
+
+"""A postal address."""
+type Address {
+  addressLine1: String
+  addressLine2: String
+  addressLine3: String
+  city: String
+  stateProvinceCode: String
+  postalCode: String
+  countryCode: String!
+  residentialAddressIndicator: Boolean
+}
+
+"""A contact person or company."""
+type Contact {
+  companyName: String
+  attentionName: String
+  taxIdentificationNumber: String
+  phone: Phone
+  faxNumber: String
+  emailAddress: String
+}
+
+"""A phone number."""
+type Phone {
+  number: String!
+  extension: String
+}
+
+# ─────────────────────────────────────────────
+# Shipping Origin & Destination
+# ─────────────────────────────────────────────
+
+"""Ship-from (origin) address."""
+type ShipFrom {
+  name: String!
+  attentionName: String
+  taxIdentificationNumber: String
+  phone: Phone
+  faxNumber: String
+  emailAddress: String
+  address: Address!
+}
+
+"""Ship-to (destination) address."""
+type ShipTo {
+  name: String!
+  attentionName: String
+  phone: Phone
+  faxNumber: String
+  emailAddress: String
+  address: Address!
+}
+
+# ─────────────────────────────────────────────
+# Service
+# ─────────────────────────────────────────────
+
+"""UPS service code."""
+type ServiceCode {
+  code: ServiceTypeCode!
+  description: String
+}
+
+"""Human-readable service description."""
+type ServiceDescription {
+  code: String!
+  description: String!
+}
+
+"""Service availability for an origin/destination pair."""
+type ServiceAvailability {
+  service: ServiceCode!
+  available: Boolean!
+  saturdayDelivery: Boolean
+  saturdayPickup: Boolean
+  holidayDelivery: Boolean
+}
+
+# ─────────────────────────────────────────────
+# Packaging
+# ─────────────────────────────────────────────
+
+"""Packaging type."""
+type PackagingType {
+  code: PackagingTypeCode!
+  description: String
+}
+
+"""Weight of a package."""
+type PackageWeight {
+  unitOfMeasurement: WeightUnit!
+  weight: Float!
+}
+
+"""Dimensions of a package."""
+type PackageDimensions {
+  unitOfMeasurement: DimensionUnit!
+  length: Float!
+  width: Float!
+  height: Float!
+}
+
+"""Customer reference attached to a package."""
+type PackageReferenceNumber {
+  barCodeIndicator: String
+  value: String!
+}
+
+# ─────────────────────────────────────────────
+# Value-Added Services
+# ─────────────────────────────────────────────
+
+"""Signature capture record."""
+type Signature {
+  type: SignatureType!
+  imageBase64: String
+  signedBy: String
+  signedAt: DateTime
+}
+
+"""Type of signature required."""
+type SignatureType {
+  code: SignatureTypeCode!
+  description: String
+}
+
+"""Delivery confirmation options."""
+type DeliveryConfirmation {
+  dcisType: String!
+  signature: Signature
+}
+
+"""Insurance option on a package."""
+type Insurance {
+  basicFlexPost: Boolean
+  insuredValue: InsuredValue
+}
+
+"""Declared insured value."""
+type InsuredValue {
+  currencyCode: String!
+  monetaryValue: Float!
+}
+
+"""Cash on delivery option."""
+type COD {
+  codFundsCode: String
+  codAmount: CODValue!
+}
+
+"""COD amount and currency."""
+type CODValue {
+  currencyCode: String!
+  monetaryValue: Float!
+}
+
+"""COD payment method type."""
+type CODPaymentType {
+  code: CODPaymentTypeCode!
+  description: String
+}
+
+# ─────────────────────────────────────────────
+# Labels
+# ─────────────────────────────────────────────
+
+"""Label format specification."""
+type LabelFormat {
+  code: LabelFormatCode!
+  description: String
+}
+
+"""Label delivery method."""
+type LabelMethod {
+  code: LabelMethodCode!
+  description: String
+}
+
+"""Label generation specification."""
+type LabelSpec {
+  labelImageFormat: LabelFormat!
+  labelStockSize: LabelStockSize
+  httpUserAgent: String
+  instruction: LabelInstruction
+}
+
+"""Label stock size."""
+type LabelStockSize {
+  height: Float!
+  width: Float!
+}
+
+"""Instruction embedded in label."""
+type LabelInstruction {
+  code: String!
+  description: String
+}
+
+"""Generated shipping label (multi-format)."""
+type Label {
+  trackingNumber: String!
+  labelFormat: LabelFormat!
+  graphicImage: String
+  htmlImage: HTMLImage
+  gifImage: GIFImage
+  eplImage: EPLImage
+  zplImage: ZPLImage
+  internationalSignatureGraphicImage: String
+  pdfGraphicImage: String
+  url: String
+}
+
+"""HTML-encoded label image."""
+type HTMLImage {
+  content: String!
+}
+
+"""GIF binary label image."""
+type GIFImage {
+  content: String!
+}
+
+"""EPL (Eltron printer language) label image."""
+type EPLImage {
+  content: String!
+}
+
+"""ZPL (Zebra printer language) label image."""
+type ZPLImage {
+  content: String!
+}
+
+"""Recover a previously generated label."""
+type LabelRecovery {
+  trackingNumber: String!
+  label: Label
+  status: String
+  statusDescription: String
+}
+
+# ─────────────────────────────────────────────
+# Package
+# ─────────────────────────────────────────────
+
+"""A single package within a shipment."""
+type Package {
+  trackingNumber: String
+  packaging: PackagingType
+  weight: PackageWeight!
+  dimensions: PackageDimensions
+  referenceNumbers: [PackageReferenceNumber]
+  deliveryConfirmation: DeliveryConfirmation
+  insurance: Insurance
+  cod: COD
+  description: String
+  largePackageIndicator: Boolean
+  additionalHandlingIndicator: Boolean
+  hazMatIndicator: Boolean
+}
+
+"""Extended package attributes."""
+type PackageDetails {
+  package: Package!
+  serviceOptions: [IndicatorType]
+  accessPointCOD: CODValue
+  packageServiceOptions: JSON
+}
+
+"""Per-package result from shipment API."""
+type PackageResult {
+  trackingNumber: String!
+  label: Label!
+  cod: CODValue
+  baseServiceCharge: Money
+  serviceOptionsCharges: Money
+  totalCharges: Money
+  billingWeight: PackageWeight
+}
+
+# ─────────────────────────────────────────────
+# Shipment
+# ─────────────────────────────────────────────
+
+"""Top-level shipment record."""
+type Shipment {
+  shipmentIdentificationNumber: String!
+  shipper: ShipFrom!
+  shipTo: ShipTo!
+  shipFrom: ShipFrom
+  service: ServiceCode!
+  packages: [Package!]!
+  paymentInformation: JSON
+  shipmentTotalWeight: Weight
+  description: String
+  referenceNumber: ReferenceNumber
+  returnService: ReturnService
+  labelSpec: LabelSpec
+  scheduledDeliveryDate: Date
+  pickupType: IndicatorType
+  shipmentServiceOptions: JSON
+  createdAt: DateTime
+}
+
+"""Detailed shipment attributes."""
+type ShipmentDetails {
+  shipment: Shipment!
+  shipmentCharges: Money
+  negotiatedRateCharges: NegotiatedRate
+  fapIndicator: Boolean
+  ratedShipmentAlerts: [String]
+}
+
+"""Input for creating a shipment."""
+input ShipmentRequest {
+  shipper: ShipFromInput!
+  shipTo: ShipToInput!
+  shipFrom: ShipFromInput
+  service: String!
+  packages: [PackageInput!]!
+  paymentInformation: JSON
+  description: String
+  referenceNumber: String
+  labelSpec: LabelSpecInput
+  returnService: ReturnServiceInput
+  shipmentServiceOptions: JSON
+}
+
+"""Response after shipment creation."""
+type ShipmentResponse {
+  shipmentIdentificationNumber: String!
+  packageResults: [PackageResult!]!
+  shipmentCharges: Money
+  negotiatedRateCharges: NegotiatedRate
+  billingWeight: Weight
+  estimatedDeliveryDate: Date
+  alerts: [String]
+}
+
+"""Void/cancel a shipment."""
+type VoidShipment {
+  shipmentIdentificationNumber: String!
+  status: String!
+  statusDescription: String
+  voidedPackages: [String]
+}
+
+# ─────────────────────────────────────────────
+# Tracking
+# ─────────────────────────────────────────────
+
+"""A UPS tracking number."""
+type TrackingNumber {
+  value: String!
+  type: String
+}
+
+"""A single tracking scan event."""
+type TrackingActivity {
+  location: Address
+  status: TrackingStatus!
+  description: String
+  signedForByName: String
+  date: DateTime
+}
+
+"""Current tracking status."""
+type TrackingStatus {
+  type: TrackingStatusType!
+  code: String!
+  description: String!
+}
+
+"""Full tracking API response."""
+type TrackingResponse {
+  trackingNumber: String!
+  shipTo: ShipTo
+  shipFrom: ShipFrom
+  service: ServiceCode
+  weight: Weight
+  referenceNumber: ReferenceNumber
+  currentStatus: TrackingStatus
+  activities: [TrackingActivity!]!
+  deliveredDate: DateTime
+  scheduledDeliveryDate: Date
+  rescheduledDeliveryDate: Date
+  numberOfPackages: Int
+}
+
+# ─────────────────────────────────────────────
+# Rating
+# ─────────────────────────────────────────────
+
+"""Input for a rate quote request."""
+input RateRequest {
+  pickupType: String
+  customerClassification: String
+  shipment: ShipmentRequest!
+}
+
+"""Rate quote response."""
+type RateResponse {
+  ratedShipments: [RateDetail!]!
+  alerts: [String]
+}
+
+"""Individual rate line item."""
+type RateDetail {
+  service: ServiceCode!
+  ratedShipmentAlerts: [String]
+  billingWeight: Weight
+  transportationCharges: Money!
+  serviceOptionsCharges: Money
+  taxCharges: Money
+  totalCharges: Money!
+  negotiatedRateCharges: NegotiatedRate
+  surcharges: [Surcharge]
+  scheduledDeliveryDate: Date
+  guaranteedDelivery: Boolean
+}
+
+"""Account-negotiated rate."""
+type NegotiatedRate {
+  netSummaryCharges: Money
+  itemizedCharges: [Money]
+  taxes: [Money]
+  totalCharges: Money
+}
+
+"""Additional charge applied to a shipment."""
+type Surcharge {
+  code: SurchargeCode!
+  amount: Money!
+  description: String
+}
+
+"""Surcharge type code."""
+type SurchargeCode {
+  code: SurchargeTypeCode!
+  description: String
+}
+
+"""Estimated transit time."""
+type TimeInTransit {
+  serviceLevel: ServiceCode!
+  estimatedArrival: DateTime
+  businessDaysInTransit: Int
+  dayOfWeek: String
+  customerCenterCutoff: String
+  autoDutyCode: String
+  quietTimeIndicator: Boolean
+}
+
+# ─────────────────────────────────────────────
+# Address Validation
+# ─────────────────────────────────────────────
+
+"""Address validation result."""
+type AddressValidation {
+  quality: Float
+  addressClassification: AddressClassification
+  addressLine: [String]
+  region: String
+  validAddressIndicator: Boolean
+  noSuggestionsIndicator: Boolean
+  candidates: [AddressCandidate]
+}
+
+"""Address classification (residential vs commercial)."""
+type AddressClassification {
+  code: String!
+  description: String!
+}
+
+"""A suggested corrected address."""
+type AddressCandidate {
+  quality: Float
+  address: Address!
+  addressClassification: AddressClassification
+}
+
+# ─────────────────────────────────────────────
+# Returns
+# ─────────────────────────────────────────────
+
+"""Return service type."""
+type ReturnService {
+  code: ReturnServiceCode!
+  description: String
+}
+
+"""Address for return shipments."""
+type ReturnAddress {
+  name: String!
+  attentionName: String
+  address: Address!
+  phone: Phone
+  emailAddress: String
+}
+
+# ─────────────────────────────────────────────
+# Delivery Options
+# ─────────────────────────────────────────────
+
+"""Alternate delivery location."""
+type AlternateDelivery {
+  unitOfMeasurement: String
+  value: String
+  type: IndicatorType
+  location: DropLocation
+}
+
+"""UPS MyChoice consumer delivery preferences."""
+type MyChoice {
+  memberId: String!
+  membershipLevel: String
+  deliveryPreferences: [IndicatorType]
+  notificationPreferences: [IndicatorType]
+  alternateDelivery: AlternateDelivery
+}
+
+# ─────────────────────────────────────────────
+# Pickup & Locations
+# ─────────────────────────────────────────────
+
+"""Schedule a pickup request / response."""
+type PickupCreation {
+  confirmationNumber: String
+  rateStatus: String
+  rateDetail: RateDetail
+  shipperNumber: String
+  serviceDate: Date
+  readyByTime: String
+  closeTime: String
+  pickupAddress: Address
+  packages: [Package]
+  overweightIndicator: Boolean
+}
+
+"""UPS drop-off location."""
+type DropLocation {
+  locationId: String!
+  name: String
+  address: Address!
+  phone: Phone
+  hours: String
+  accessPointIndicator: Boolean
+  dropOffIndicator: Boolean
+  pickupIndicator: Boolean
+  distance: Float
+  distanceUnit: String
+}
+
+"""UPS service / customer center."""
+type ServiceCenter {
+  centerId: String!
+  name: String
+  address: Address!
+  phone: Phone
+  hours: String
+  services: [ServiceCode]
+}
+
+"""Request to find nearby UPS locations."""
+input LocatorRequest {
+  originAddress: AddressInput!
+  maxListSize: Int
+  radius: Float
+  unitOfMeasurement: String
+  serviceCode: String
+  locationTypes: [String]
+}
+
+"""Response with nearby UPS locations."""
+type LocatorResponse {
+  dropLocations: [DropLocation]
+  serviceCenters: [ServiceCenter]
+  accessPoints: [AccessPointLocation]
+}
+
+"""UPS Access Point location details."""
+type AccessPointLocation {
+  accessPointId: String!
+  name: String
+  address: Address!
+  phone: Phone
+  hours: String
+  distance: Float
+  distanceUnit: String
+  imageUrl: String
+  open: Boolean
+}
+
+# ─────────────────────────────────────────────
+# Freight / LTL
+# ─────────────────────────────────────────────
+
+"""LTL freight shipment."""
+type FreightShipment {
+  shipmentIdentificationNumber: String
+  shipper: ShipFrom!
+  shipTo: ShipTo!
+  shipFrom: ShipFrom
+  service: LTLService!
+  commodities: [Commodity!]!
+  handlingUnits: [HandlingUnit]
+  totalWeight: Weight
+  totalLinearFeet: Float
+  documents: Boolean
+  pickupRequest: FreightPickup
+  totalCharges: Money
+  baseRate: Money
+  discountAmount: Money
+  surcharges: [Surcharge]
+  transitDays: Int
+  guaranteedIndicator: Boolean
+}
+
+"""LTL freight pickup request."""
+type FreightPickup {
+  confirmationNumber: String
+  shipperAccountNumber: String
+  pickupDate: Date
+  readyTime: String
+  closeTime: String
+  pickupAddress: Address
+  requesterName: String
+  requesterPhone: Phone
+  totalWeight: Weight
+  numberOfHandlingUnits: Int
+}
+
+"""Less-than-truckload service option."""
+type LTLService {
+  code: String!
+  description: String
+}
+
+"""Freight commodity description."""
+type Commodity {
+  commodityId: String
+  description: String!
+  weight: Weight!
+  numberOfPieces: Int
+  packagingType: PackagingType
+  dimensions: Dimensions
+  freightClass: String
+  nmfcCode: String
+  hazardousMaterial: Boolean
+}
+
+"""Freight handling unit."""
+type HandlingUnit {
+  quantity: Int!
+  type: PackagingType!
+  weight: Weight
+  dimensions: Dimensions
+  stackable: Boolean
+}
+
+# ─────────────────────────────────────────────
+# QuantumView
+# ─────────────────────────────────────────────
+
+"""QuantumView data feed record."""
+type QuantumView {
+  subscriptionName: String!
+  dateRange: String
+  shipments: [QVShipment]
+  fileStatus: String
+  fileName: String
+}
+
+"""QuantumView subscription configuration."""
+type QVSubscription {
+  name: String!
+  fileType: QVSubscriptionFileType!
+  dateRange: String
+  beginDate: Date
+  endDate: Date
+  status: String
+  emailAddress: String
+}
+
+"""Shipment record within a QV feed."""
+type QVShipment {
+  shipmentIdentificationNumber: String!
+  trackingNumber: String
+  service: ServiceCode
+  shipper: ShipFrom
+  shipTo: ShipTo
+  weight: Weight
+  referenceNumber: ReferenceNumber
+  activity: TrackingActivity
+  fileType: QVSubscriptionFileType
+}
+
+# ─────────────────────────────────────────────
+# Manifest
+# ─────────────────────────────────────────────
+
+"""End-of-day manifest request."""
+input ManifestRequest {
+  shipperNumber: String!
+  trackingNumbers: [String]
+  pickupDate: Date
+}
+
+"""End-of-day manifest response."""
+type ManifestResponse {
+  status: String!
+  totalPackages: Int
+  totalWeight: Weight
+  manifestDocumentURL: String
+}
+
+# ─────────────────────────────────────────────
+# Authentication
+# ─────────────────────────────────────────────
+
+"""UPS Developer API key."""
+type APIKey {
+  clientId: String!
+  clientSecret: String
+  name: String
+  status: String
+  createdAt: DateTime
+  scopes: [String]
+}
+
+"""OAuth 2.0 access token."""
+type Token {
+  accessToken: String!
+  tokenType: String!
+  issuedAt: DateTime
+  expiresIn: Int
+  scope: String
+  clientId: String
+}
+
+# ─────────────────────────────────────────────
+# Webhooks
+# ─────────────────────────────────────────────
+
+"""Webhook endpoint registration."""
+type Webhook {
+  webhookId: String
+  url: String!
+  events: [String!]!
+  status: String
+  createdAt: DateTime
+  secret: String
+}
+
+# ─────────────────────────────────────────────
+# Input Types
+# ─────────────────────────────────────────────
+
+input AddressInput {
+  addressLine1: String
+  addressLine2: String
+  addressLine3: String
+  city: String
+  stateProvinceCode: String
+  postalCode: String
+  countryCode: String!
+  residentialAddressIndicator: Boolean
+}
+
+input ShipFromInput {
+  name: String!
+  attentionName: String
+  taxIdentificationNumber: String
+  phone: PhoneInput
+  emailAddress: String
+  address: AddressInput!
+}
+
+input ShipToInput {
+  name: String!
+  attentionName: String
+  phone: PhoneInput
+  emailAddress: String
+  address: AddressInput!
+}
+
+input PhoneInput {
+  number: String!
+  extension: String
+}
+
+input PackageInput {
+  packagingType: String
+  weight: WeightInput!
+  dimensions: DimensionsInput
+  referenceNumbers: [String]
+  description: String
+  largePackageIndicator: Boolean
+  additionalHandlingIndicator: Boolean
+}
+
+input WeightInput {
+  unitOfMeasurement: WeightUnit!
+  weight: Float!
+}
+
+input DimensionsInput {
+  unitOfMeasurement: DimensionUnit!
+  length: Float!
+  width: Float!
+  height: Float!
+}
+
+input LabelSpecInput {
+  labelImageFormat: LabelFormatCode!
+  httpUserAgent: String
+}
+
+input ReturnServiceInput {
+  code: ReturnServiceCode!
+  returnAddress: AddressInput
+}
+
+# ─────────────────────────────────────────────
+# Root Operations
+# ─────────────────────────────────────────────
+
+type Query {
+  """Track a package by tracking number."""
+  trackPackage(trackingNumber: String!, locale: String, returnSignature: Boolean): TrackingResponse
+
+  """Get rate quotes for a shipment."""
+  getRate(request: RateRequest!): RateResponse
+
+  """Validate a postal address."""
+  validateAddress(address: AddressInput!): AddressValidation
+
+  """Find nearby UPS locations (drop-off, access points, service centers)."""
+  findLocations(request: LocatorRequest!): LocatorResponse
+
+  """Get estimated time in transit for a shipment."""
+  getTimeInTransit(shipFrom: AddressInput!, shipTo: AddressInput!, weight: WeightInput!, serviceDate: Date): [TimeInTransit]
+
+  """Recover a previously generated shipping label."""
+  getLabelRecovery(trackingNumber: String!, labelFormat: LabelFormatCode): LabelRecovery
+
+  """Check service availability for an origin/destination pair."""
+  getServiceAvailability(origin: AddressInput!, destination: AddressInput!): [ServiceAvailability]
+
+  """Retrieve QuantumView data feed shipments."""
+  getQuantumView(subscriptionName: String!, beginDate: Date, endDate: Date): [QVShipment]
+
+  """Find UPS drop-off locations near an address."""
+  getDropLocations(address: AddressInput!, radius: Float, unit: String): [DropLocation]
+
+  """Get available pickup windows for an address."""
+  getPickupWindows(address: AddressInput!, serviceDate: Date): PickupCreation
+
+  """Get all QuantumView subscriptions for the account."""
+  listQuantumViewSubscriptions: [QVSubscription]
+}
+
+type Mutation {
+  """Create a new shipment and generate labels."""
+  createShipment(request: ShipmentRequest!): ShipmentResponse
+
+  """Void (cancel) a shipment."""
+  voidShipment(shipmentIdentificationNumber: String!, trackingNumbers: [String]): VoidShipment
+
+  """Schedule a package pickup."""
+  createPickup(
+    shipperNumber: String!
+    serviceDate: Date!
+    readyByTime: String!
+    closeTime: String!
+    address: AddressInput!
+    packages: [PackageInput]
+  ): PickupCreation
+
+  """Cancel a scheduled pickup."""
+  cancelPickup(confirmationNumber: String!, shipperNumber: String!): Boolean
+
+  """Create a freight (LTL) shipment."""
+  createFreightShipment(
+    shipper: ShipFromInput!
+    shipTo: ShipToInput!
+    service: String!
+    commodities: [PackageInput!]!
+    pickupDate: Date
+  ): FreightShipment
+
+  """Schedule a freight pickup."""
+  createFreightPickup(
+    shipperAccountNumber: String!
+    pickupDate: Date!
+    readyTime: String!
+    closeTime: String!
+    address: AddressInput!
+  ): FreightPickup
+
+  """Create or update a QuantumView subscription."""
+  subscribeQuantumView(
+    name: String!
+    fileType: QVSubscriptionFileType!
+    beginDate: Date
+    endDate: Date
+    emailAddress: String
+  ): QVSubscription
+
+  """Register a webhook endpoint for event notifications."""
+  registerWebhook(url: String!, events: [String!]!): Webhook
+
+  """Delete a registered webhook."""
+  deleteWebhook(webhookId: String!): Boolean
+
+  """Submit end-of-day manifest."""
+  submitManifest(request: ManifestRequest!): ManifestResponse
+}
