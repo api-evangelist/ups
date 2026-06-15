@@ -1,80 +1,60 @@
-# UPS
+# UPS (ups)
 
-UPS (United Parcel Service) is a Fortune 500 global logistics company specializing in package delivery and supply chain management. UPS provides a comprehensive REST API platform with OAuth 2.0 authentication covering shipping, tracking, rating, address validation, pickup scheduling, paperless international documents, and time-in-transit estimation.
+UPS, or United Parcel Service, is a Fortune 500 global logistics company that specializes in package delivery and supply chain management services. UPS provides a comprehensive REST API platform with OAuth 2.0 authentication covering shipping, tracking, rating, address validation, pickup scheduling, paperless international documents, and time-in-transit estimation.
 
-**Developer Portal:** https://developer.ups.com/
-**API Catalog:** https://developer.ups.com/catalog
-**Getting Started:** https://developer.ups.com/get-started
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml)
+
+## Scope
+
+- **Type:** Index
+- **Position:** Consumer
+- **Access:** 3rd-Party
+
+## Tags
+
+- Logistics
+- Shipping
+- Fortune 500
+- Supply Chain
+
+## Timestamps
+
+- **Created:** 2025-03-01
+- **Modified:** 2026-05-19
 
 ## APIs
 
-| API | Description |
-|---|---|
-| [UPS Shipping API](openapi/ups-shipping-openapi.yml) | Comprehensive shipping API covering OAuth, rating, shipment creation, tracking, address validation, pickup, and time-in-transit |
+### UPS Shipping API
 
-## OpenAPI Specifications
+The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, and access time-in-transit information via OAuth 2.0 authenticated REST API calls.
 
-| Spec | Description |
-|---|---|
-| [ups-shipping-openapi.yml](openapi/ups-shipping-openapi.yml) | UPS REST API covering OAuth, rating, shipping, tracking, address validation, pickup, and paperless documents |
+- **Human URL:** [https://developer.ups.com/](https://developer.ups.com/)
+- **Base URL:** `https://onlinetools.ups.com/api`
 
-## Spectral Rules
+#### Tags
 
-| Ruleset | Description |
-|---|---|
-| [ups-rules.yml](rules/ups-rules.yml) | Spectral ruleset enforcing UPS API conventions including OAuth auth, PascalCase wrappers, and path patterns |
+- Shipping
+- Logistics
+- Tracking
+- Rating
+- Address Validation
 
-## Naftiko Capabilities
+#### Properties
 
-### Shared Definitions
+- [Documentation](https://developer.ups.com/)
+- [Getting Started](https://developer.ups.com/get-started)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/openapi/ups-shipping-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/ups-shipping.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/ups-shipping.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-| File | APIs Covered |
-|---|---|
-| [shared/ups-shipping.yaml](capabilities/shared/ups-shipping.yaml) | UPS Shipping API (rates, shipments, tracking, address validation, pickup, transit times) |
+## Common Properties
 
-### Workflow Capabilities
-
-| Workflow | Description | Tools |
-|---|---|---|
-| [shipping-and-logistics.yaml](capabilities/shipping-and-logistics.yaml) | End-to-end shipping and logistics — rate shopping, shipment creation, tracking, address validation, pickup, and transit times | 9 tools |
-
-## JSON Schemas
-
-| Schema | Description |
-|---|---|
-| [ups-shipment-schema.json](json-schema/ups-shipment-schema.json) | UPS shipment including tracking number, service, addresses, package, label, and charges |
-
-## JSON Structure
-
-| Structure | Description |
-|---|---|
-| [ups-shipment-structure.json](json-structure/ups-shipment-structure.json) | Field-level documentation for the UPS Shipment resource |
-
-## JSON-LD
-
-| Context | Description |
-|---|---|
-| [ups-context.jsonld](json-ld/ups-context.jsonld) | Linked data context mapping UPS resources to schema.org (ParcelDelivery, PostalAddress, PriceSpecification) |
-
-## Examples
-
-| Example | Description |
-|---|---|
-| [ups-track-shipment-example.json](examples/ups-track-shipment-example.json) | GET /track/v1/details/{trackingNumber} response |
-| [ups-shop-rates-example.json](examples/ups-shop-rates-example.json) | POST /rating/v1/Shop request and response |
-
-## Vocabulary
-
-| File | Description |
-|---|---|
-| [ups-vocabulary.yml](vocabulary/ups-vocabulary.yml) | Domain vocabulary for UPS shipping and logistics including tracking numbers, service codes, address classification, and OAuth concepts |
-
-## Links
-
-- **Website:** https://www.ups.com
-- **Developer Portal:** https://developer.ups.com
-- **API Catalog:** https://developer.ups.com/catalog
-- **Getting Started:** https://developer.ups.com/get-started
+- [LinkedIn](https://www.linkedin.com/company/ups)
+- [Website](https://www.ups.com)
+- [Developer  Portal](https://developer.ups.com)
+- [A P I  Catalog](https://developer.ups.com/catalog)
+- [Getting Started](https://developer.ups.com/get-started)
+- [Features](undefined)
 
 ## Maintainers
 

@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OAuth Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/security/v1/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Obtain an OAuth 2.0 access token using client credentials grant type. The access token is used to authenticate all subsequent API requests."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rating",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Shop Rates",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/rating/v1/Shop",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve rates for all available UPS services for a given shipment, allowing comparison of service levels, prices, and transit times."
+        },
+        {
+          "info": {
+            "name": "Get Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/rating/v1/Rate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve the rate for a specific UPS service for a given shipment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Shipping",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/shipments/v1/ship",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new shipment and generate a shipping label. Returns a tracking number, label image, and shipment confirmation details."
+        },
+        {
+          "info": {
+            "name": "Void Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://onlinetools.ups.com/api/shipments/v1/void/cancel/:shipmentIdentificationNumber",
+            "params": [
+              {
+                "name": "shipmentIdentificationNumber",
+                "value": "",
+                "type": "path",
+                "description": "UPS tracking number / shipment identification number"
+              }
+            ]
+          },
+          "docs": "Cancel/void a shipment by its tracking number before it is tendered to UPS."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Track Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://onlinetools.ups.com/api/track/v1/details/:inquiryNumber",
+            "params": [
+              {
+                "name": "inquiryNumber",
+                "value": "",
+                "type": "path",
+                "description": "UPS tracking number (1Z...) or shipment reference number"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "Locale for response messages"
+              },
+              {
+                "name": "returnSignature",
+                "value": "",
+                "type": "query",
+                "description": "Include delivery signature image if available"
+              },
+              {
+                "name": "returnMilestones",
+                "value": "",
+                "type": "query",
+                "description": "Include delivery milestone tracking"
+              }
+            ]
+          },
+          "docs": "Retrieve real-time tracking information for a package or shipment using a UPS tracking number."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Address Validation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate Address Street Level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/addressvalidation/v1/1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate and standardize a street-level address. Returns whether the address is valid, standardized formatting, and residential/commercial classification."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pickup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Schedule Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/pickup/v1/pickups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule a UPS pickup for one or more shipments at a specified address."
+        },
+        {
+          "info": {
+            "name": "Cancel Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://onlinetools.ups.com/api/pickup/v1/pickups/:prn",
+            "params": [
+              {
+                "name": "prn",
+                "value": "",
+                "type": "path",
+                "description": "Pickup request number"
+              }
+            ]
+          },
+          "docs": "Cancel a previously scheduled UPS pickup using the pickup request number."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Time In Transit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Time In Transit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/timeintransit/v1/transittimes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get estimated transit times for UPS services between origin and destination, given a ship date."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Paperless Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload Paperless Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/paperlessdocuments/v1/upload/:shipperNumber",
+            "params": [
+              {
+                "name": "shipperNumber",
+                "value": "",
+                "type": "path",
+                "description": "UPS account (shipper) number"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload an international shipping document (e.g., commercial invoice, certificate of origin) for paperless trade."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
