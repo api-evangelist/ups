@@ -46,7 +46,7 @@ common:
   url: https://www.linkedin.com/company/ups
 - type: Website
   url: https://www.ups.com
-- type: Developer Portal
+- type: DeveloperPortal
   url: https://developer.ups.com
 - type: API Catalog
   url: https://developer.ups.com/catalog
