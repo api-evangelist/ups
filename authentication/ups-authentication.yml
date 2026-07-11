@@ -1,0 +1,24 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/ups-shipping-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+    scopes: 0
+  sources:
+  - openapi/ups-shipping-openapi.yml
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  description: OAuth 2.0 bearer token from /security/v1/oauth/token
+  sources:
+  - openapi/ups-shipping-openapi.yml
