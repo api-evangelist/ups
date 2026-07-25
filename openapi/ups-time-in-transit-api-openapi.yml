@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: UPS Shipping Address Validation Time In Transit API
+  description: The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.
+  version: v1
+  contact:
+    name: UPS Developer Support
+    url: https://developer.ups.com/
+  termsOfService: https://www.ups.com/us/en/help-center/legal-terms-conditions/developer-terms-of-service.page
+servers:
+- url: https://onlinetools.ups.com/api
+  description: UPS Production API
+- url: https://wwwcie.ups.com/api
+  description: UPS Customer Integration Environment (CIE - Testing)
+security:
+- BearerAuth: []
+tags:
+- name: Time In Transit
+  description: Transit time and service schedules
+paths:
+  /timeintransit/v1/transittimes:
+    post:
+      operationId: getTimeInTransit
+      summary: Get Time In Transit
+      description: Get estimated transit times for UPS services between origin and destination, given a ship date.
+      tags:
+      - Time In Transit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeInTransitRequest'
+      responses:
+        '200':
+          description: Time-in-transit estimates by service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeInTransitResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    TimeInTransitResponse:
+      type: object
+      properties:
+        validationList:
+          type: object
+        destinationPickList:
+          type: array
+          items:
+            type: object
+        emsResponse:
+          type: object
+          properties:
+            shipDate:
+              type: string
+            shipTime:
+              type: string
+            services:
+              type: array
+              items:
+                type: object
+                properties:
+                  serviceLevel:
+                    type: string
+                  serviceLevelDescription:
+                    type: string
+                  deliveryDate:
+                    type: string
+                  deliveryTime:
+                    type: string
+                  commitTime:
+                    type: string
+                  businessTransitDays:
+                    type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+    TimeInTransitRequest:
+      type: object
+      properties:
+        originCountryCode:
+          type: string
+          description: ISO country code of origin
+        originStateProvince:
+          type: string
+        originCityName:
+          type: string
+        originPostalCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        destinationStateProvince:
+          type: string
+        destinationCityName:
+          type: string
+        destinationPostalCode:
+          type: string
+        weight:
+          type: string
+          description: Package weight
+        weightUnitOfMeasure:
+          type: string
+          enum:
+          - LBS
+          - KGS
+        shipDate:
+          type: string
+          description: Scheduled ship date (YYYY-MM-DD)
+        shipTime:
+          type: string
+          description: Ship time (HH:MM:SS)
+        residentialIndicator:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          description: 1=Residential, 2=Commercial
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token from /security/v1/oauth/token

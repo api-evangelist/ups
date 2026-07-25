@@ -1,0 +1,207 @@
+openapi: 3.0.3
+info:
+  title: UPS Shipping Address Validation Pickup API
+  description: The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.
+  version: v1
+  contact:
+    name: UPS Developer Support
+    url: https://developer.ups.com/
+  termsOfService: https://www.ups.com/us/en/help-center/legal-terms-conditions/developer-terms-of-service.page
+servers:
+- url: https://onlinetools.ups.com/api
+  description: UPS Production API
+- url: https://wwwcie.ups.com/api
+  description: UPS Customer Integration Environment (CIE - Testing)
+security:
+- BearerAuth: []
+tags:
+- name: Pickup
+  description: Pickup scheduling and management
+paths:
+  /pickup/v1/pickups:
+    post:
+      operationId: schedulePickup
+      summary: Schedule Pickup
+      description: Schedule a UPS pickup for one or more shipments at a specified address.
+      tags:
+      - Pickup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PickupRequest'
+      responses:
+        '200':
+          description: Pickup scheduled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PickupResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /pickup/v1/pickups/{prn}:
+    delete:
+      operationId: cancelPickup
+      summary: Cancel Pickup
+      description: Cancel a previously scheduled UPS pickup using the pickup request number.
+      tags:
+      - Pickup
+      parameters:
+      - name: prn
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Pickup request number
+      responses:
+        '200':
+          description: Pickup cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelPickupResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    PickupResponse:
+      type: object
+      properties:
+        PickupCreationResponse:
+          type: object
+          properties:
+            PRN:
+              type: string
+              description: Pickup request number
+            RateStatus:
+              type: object
+              properties:
+                Code:
+                  type: string
+                Description:
+                  type: string
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+    PickupRequest:
+      type: object
+      properties:
+        PickupCreationRequest:
+          type: object
+          properties:
+            RatePickupIndicator:
+              type: string
+              enum:
+              - Y
+              - N
+            Shipper:
+              type: object
+              properties:
+                Account:
+                  type: object
+                  properties:
+                    AccountNumber:
+                      type: string
+                    AccountCountryCode:
+                      type: string
+            PickupDateInfo:
+              type: object
+              properties:
+                CloseTime:
+                  type: string
+                  description: Latest pickup time (HHMM)
+                ReadyTime:
+                  type: string
+                  description: Earliest ready time (HHMM)
+                PickupDate:
+                  type: string
+                  description: Pickup date (YYYYMMDD)
+            PickupAddress:
+              type: object
+              properties:
+                CompanyName:
+                  type: string
+                ContactName:
+                  type: string
+                AddressLine:
+                  type: string
+                City:
+                  type: string
+                StateProvince:
+                  type: string
+                PostalCode:
+                  type: string
+                CountryCode:
+                  type: string
+                ResidentialIndicator:
+                  type: string
+                  enum:
+                  - Y
+                  - N
+            OverweightIndicator:
+              type: string
+              enum:
+              - Y
+              - N
+            PaymentMethod:
+              type: string
+              enum:
+              - '01'
+              description: 01 = Account
+    CancelPickupResponse:
+      type: object
+      properties:
+        PickupCancelResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token from /security/v1/oauth/token

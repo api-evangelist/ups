@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: UPS Shipping Address Validation Paperless Documents API
+  description: The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.
+  version: v1
+  contact:
+    name: UPS Developer Support
+    url: https://developer.ups.com/
+  termsOfService: https://www.ups.com/us/en/help-center/legal-terms-conditions/developer-terms-of-service.page
+servers:
+- url: https://onlinetools.ups.com/api
+  description: UPS Production API
+- url: https://wwwcie.ups.com/api
+  description: UPS Customer Integration Environment (CIE - Testing)
+security:
+- BearerAuth: []
+tags:
+- name: Paperless Documents
+  description: International paperless document management
+paths:
+  /paperlessdocuments/v1/upload/{shipperNumber}:
+    post:
+      operationId: uploadPaperlessDocument
+      summary: Upload Paperless Document
+      description: Upload an international shipping document (e.g., commercial invoice, certificate of origin) for paperless trade.
+      tags:
+      - Paperless Documents
+      parameters:
+      - name: shipperNumber
+        in: path
+        required: true
+        schema:
+          type: string
+        description: UPS account (shipper) number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaperlessDocumentRequest'
+      responses:
+        '200':
+          description: Document uploaded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaperlessDocumentResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    PaperlessDocumentResponse:
+      type: object
+      properties:
+        UploadResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            FormsHistoryDocumentID:
+              type: array
+              items:
+                type: object
+                properties:
+                  DocumentID:
+                    type: string
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+    PaperlessDocumentRequest:
+      type: object
+      properties:
+        UploadRequest:
+          type: object
+          properties:
+            Request:
+              type: object
+            UserCreatedForm:
+              type: array
+              items:
+                type: object
+                properties:
+                  UserCreatedFormFileName:
+                    type: string
+                  UserCreatedFormFile:
+                    type: string
+                    description: Base64-encoded document content
+                  UserCreatedFormFileFormat:
+                    type: object
+                    properties:
+                      Code:
+                        type: string
+                        enum:
+                        - pdf
+                        - gif
+                        - jpg
+                        - doc
+                        - docx
+                  UserCreatedFormDocumentType:
+                    type: object
+                    properties:
+                      Code:
+                        type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token from /security/v1/oauth/token

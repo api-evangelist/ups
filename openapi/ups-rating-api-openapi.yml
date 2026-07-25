@@ -1,0 +1,290 @@
+openapi: 3.0.3
+info:
+  title: UPS Shipping Address Validation Rating API
+  description: The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.
+  version: v1
+  contact:
+    name: UPS Developer Support
+    url: https://developer.ups.com/
+  termsOfService: https://www.ups.com/us/en/help-center/legal-terms-conditions/developer-terms-of-service.page
+servers:
+- url: https://onlinetools.ups.com/api
+  description: UPS Production API
+- url: https://wwwcie.ups.com/api
+  description: UPS Customer Integration Environment (CIE - Testing)
+security:
+- BearerAuth: []
+tags:
+- name: Rating
+  description: Shipping rates and service comparison
+paths:
+  /rating/v1/Shop:
+    post:
+      operationId: shopRates
+      summary: Shop Rates
+      description: Retrieve rates for all available UPS services for a given shipment, allowing comparison of service levels, prices, and transit times.
+      tags:
+      - Rating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateRequest'
+      responses:
+        '200':
+          description: Rate shop response with all available services
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /rating/v1/Rate:
+    post:
+      operationId: getRate
+      summary: Get Rate
+      description: Retrieve the rate for a specific UPS service for a given shipment.
+      tags:
+      - Rating
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RateRequest'
+      responses:
+        '200':
+          description: Rate response for specific service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    RateResponse:
+      type: object
+      properties:
+        RateResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+              properties:
+                ResponseStatus:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+            RatedShipment:
+              type: array
+              items:
+                type: object
+                properties:
+                  Service:
+                    $ref: '#/components/schemas/ServiceCode'
+                  TotalCharges:
+                    type: object
+                    properties:
+                      CurrencyCode:
+                        type: string
+                      MonetaryValue:
+                        type: string
+                  GuaranteedDelivery:
+                    type: object
+                    properties:
+                      BusinessDaysInTransit:
+                        type: string
+                      DeliveryByTime:
+                        type: string
+    Address:
+      type: object
+      properties:
+        AddressLine:
+          type: array
+          items:
+            type: string
+          description: Street address lines
+        City:
+          type: string
+        StateProvinceCode:
+          type: string
+          description: Two-letter state/province code
+        PostalCode:
+          type: string
+        CountryCode:
+          type: string
+          description: Two-letter ISO country code
+          example: US
+        ResidentialAddressIndicator:
+          type: string
+          description: Presence indicates residential address
+    RateRequest:
+      type: object
+      required:
+      - RateRequest
+      properties:
+        RateRequest:
+          type: object
+          required:
+          - Shipment
+          properties:
+            PickupType:
+              type: object
+              properties:
+                Code:
+                  type: string
+            Shipment:
+              type: object
+              properties:
+                Shipper:
+                  $ref: '#/components/schemas/ShipperInfo'
+                ShipTo:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                    Address:
+                      $ref: '#/components/schemas/Address'
+                ShipFrom:
+                  type: object
+                  properties:
+                    Name:
+                      type: string
+                    Address:
+                      $ref: '#/components/schemas/Address'
+                Service:
+                  $ref: '#/components/schemas/ServiceCode'
+                Package:
+                  $ref: '#/components/schemas/PackageInfo'
+    ServiceCode:
+      type: object
+      properties:
+        Code:
+          type: string
+          description: 'UPS service codes:
+
+            01=Next Day Air, 02=2nd Day Air, 03=Ground,
+
+            07=World Wide Express, 08=World Wide Expedited,
+
+            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
+
+            14=Next Day Air Early AM, 54=Worldwide Express Plus,
+
+            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
+
+            83=Today Dedicated Courier, 84=Today Intercity,
+
+            85=Today Express, 86=Today Express Saver
+
+            '
+        Description:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+    ShipperInfo:
+      type: object
+      required:
+      - Name
+      - ShipperNumber
+      - Address
+      properties:
+        Name:
+          type: string
+        AttentionName:
+          type: string
+        ShipperNumber:
+          type: string
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    PackageInfo:
+      type: object
+      properties:
+        PackagingType:
+          type: object
+          properties:
+            Code:
+              type: string
+              description: 02 = customer supplied package
+        Dimensions:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - IN
+                  - CM
+            Length:
+              type: string
+            Width:
+              type: string
+            Height:
+              type: string
+        PackageWeight:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - LBS
+                  - KGS
+            Weight:
+              type: string
+  responses:
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+          scopes: {}
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token from /security/v1/oauth/token
