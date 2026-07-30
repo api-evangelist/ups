@@ -1,29 +1,134 @@
 aid: ups
 url: https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml
 apis:
-- aid: ups:ups-shipping
-  name: UPS Shipping API
-  description: The UPS Shipping API enables developers to create and manage shipments,
-    generate shipping labels, validate addresses, retrieve rates, track packages,
-    schedule pickups, and access time-in-transit information via OAuth 2.0 authenticated
-    REST API calls.
+- aid: ups:ups-address-validation-api
+  name: UPS Address Validation API
+  description: Address validation and standardization
   humanURL: https://developer.ups.com/
   baseURL: https://onlinetools.ups.com/api
   tags:
-  - Shipping
-  - Logistics
-  - Tracking
-  - Rating
   - Address Validation
   properties:
+  - type: OpenAPI
+    url: openapi/ups-address-validation-api-openapi.yml
   - type: Documentation
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-oauth-api
+  name: UPS OAuth API
+  description: OAuth 2.0 token management
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - OAuth
+  properties:
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/openapi/ups-shipping-openapi.yml
-  - url: graphql/ups-graphql.md
-    type: GraphQL
+    url: openapi/ups-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-paperless-documents-api
+  name: UPS Paperless Documents API
+  description: International paperless document management
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - Paperless Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/ups-paperless-documents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-pickup-api
+  name: UPS Pickup API
+  description: Pickup scheduling and management
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - Pickup
+  properties:
+  - type: OpenAPI
+    url: openapi/ups-pickup-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-rating-api
+  name: UPS Rating API
+  description: Shipping rates and service comparison
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - Rating
+  properties:
+  - type: OpenAPI
+    url: openapi/ups-rating-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-shipping-api
+  name: UPS Shipping API
+  description: Shipment creation and label generation
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - Shipping
+  properties:
+  - type: OpenAPI
+    url: openapi/ups-shipping-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-time-in-transit-api
+  name: UPS Time In Transit API
+  description: Transit time and service schedules
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - Time In Transit
+  properties:
+  - type: OpenAPI
+    url: openapi/ups-time-in-transit-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
+- aid: ups:ups-tracking-api
+  name: UPS Tracking API
+  description: Package tracking and status
+  humanURL: https://developer.ups.com/
+  baseURL: https://onlinetools.ups.com/api
+  tags:
+  - Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/ups-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://developer.ups.com/
+  - type: GettingStarted
+    url: https://developer.ups.com/get-started
+  - type: GraphQL
+    url: graphql/ups-graphql.md
 name: UPS
 tags:
 - Logistics
@@ -31,7 +136,20 @@ tags:
 - Fortune 500
 - Supply Chain
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ups.png
 access: 3rd-Party
 created: '2025-03-01'
 modified: '2026-05-19'
