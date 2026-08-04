@@ -1,0 +1,28 @@
+{
+  "provider": "ups",
+  "sources": [
+    "ups-address-validation-api-openapi.yml",
+    "ups-oauth-api-openapi.yml",
+    "ups-paperless-documents-api-openapi.yml",
+    "ups-pickup-api-openapi.yml",
+    "ups-rating-api-openapi.yml",
+    "ups-shipping-api-openapi.yml",
+    "ups-time-in-transit-api-openapi.yml",
+    "ups-tracking-api-openapi.yml"
+  ],
+  "outputs": [
+    "ups-address-validation-api-openapi.yml",
+    "ups-oauth-api-openapi.yml",
+    "ups-paperless-documents-api-openapi.yml",
+    "ups-pickup-api-openapi.yml",
+    "ups-rating-api-openapi.yml",
+    "ups-shipping-api-openapi.yml",
+    "ups-time-in-transit-api-openapi.yml",
+    "ups-tracking-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
