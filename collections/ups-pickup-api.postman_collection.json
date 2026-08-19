@@ -1,0 +1,512 @@
+{
+  "item": [
+    {
+      "id": "c5ff3124-7f55-4a1a-a2dd-6e39debdd2c1",
+      "name": "Pickup",
+      "description": {
+        "content": "Pickup scheduling and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bb16de39-906f-4bca-a8a6-ab180cf48aaf",
+          "name": "Schedule Pickup",
+          "request": {
+            "name": "Schedule Pickup",
+            "description": {
+              "content": "Schedule a UPS pickup for one or more shipments at a specified address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickup",
+                "v1",
+                "pickups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"PickupCreationRequest\": {\n    \"RatePickupIndicator\": \"<string>\",\n    \"Shipper\": {\n      \"Account\": {\n        \"AccountNumber\": \"<string>\",\n        \"AccountCountryCode\": \"<string>\"\n      }\n    },\n    \"PickupDateInfo\": {\n      \"CloseTime\": \"<string>\",\n      \"ReadyTime\": \"<string>\",\n      \"PickupDate\": \"<string>\"\n    },\n    \"PickupAddress\": {\n      \"CompanyName\": \"<string>\",\n      \"ContactName\": \"<string>\",\n      \"AddressLine\": \"<string>\",\n      \"City\": \"<string>\",\n      \"StateProvince\": \"<string>\",\n      \"PostalCode\": \"<string>\",\n      \"CountryCode\": \"<string>\",\n      \"ResidentialIndicator\": \"<string>\"\n    },\n    \"OverweightIndicator\": \"<string>\",\n    \"PaymentMethod\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "12314ca6-9475-45c8-96de-d249d9ebf262",
+              "name": "Pickup scheduled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"PickupCreationRequest\": {\n    \"RatePickupIndicator\": \"<string>\",\n    \"Shipper\": {\n      \"Account\": {\n        \"AccountNumber\": \"<string>\",\n        \"AccountCountryCode\": \"<string>\"\n      }\n    },\n    \"PickupDateInfo\": {\n      \"CloseTime\": \"<string>\",\n      \"ReadyTime\": \"<string>\",\n      \"PickupDate\": \"<string>\"\n    },\n    \"PickupAddress\": {\n      \"CompanyName\": \"<string>\",\n      \"ContactName\": \"<string>\",\n      \"AddressLine\": \"<string>\",\n      \"City\": \"<string>\",\n      \"StateProvince\": \"<string>\",\n      \"PostalCode\": \"<string>\",\n      \"CountryCode\": \"<string>\",\n      \"ResidentialIndicator\": \"<string>\"\n    },\n    \"OverweightIndicator\": \"<string>\",\n    \"PaymentMethod\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"PickupCreationResponse\": {\n    \"PRN\": \"string\",\n    \"RateStatus\": {\n      \"Code\": \"string\",\n      \"Description\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "254df395-0a59-495b-be4e-df873112c369",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"PickupCreationRequest\": {\n    \"RatePickupIndicator\": \"<string>\",\n    \"Shipper\": {\n      \"Account\": {\n        \"AccountNumber\": \"<string>\",\n        \"AccountCountryCode\": \"<string>\"\n      }\n    },\n    \"PickupDateInfo\": {\n      \"CloseTime\": \"<string>\",\n      \"ReadyTime\": \"<string>\",\n      \"PickupDate\": \"<string>\"\n    },\n    \"PickupAddress\": {\n      \"CompanyName\": \"<string>\",\n      \"ContactName\": \"<string>\",\n      \"AddressLine\": \"<string>\",\n      \"City\": \"<string>\",\n      \"StateProvince\": \"<string>\",\n      \"PostalCode\": \"<string>\",\n      \"CountryCode\": \"<string>\",\n      \"ResidentialIndicator\": \"<string>\"\n    },\n    \"OverweightIndicator\": \"<string>\",\n    \"PaymentMethod\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb944640-e880-4183-8ffc-7d777ae76b19",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"PickupCreationRequest\": {\n    \"RatePickupIndicator\": \"<string>\",\n    \"Shipper\": {\n      \"Account\": {\n        \"AccountNumber\": \"<string>\",\n        \"AccountCountryCode\": \"<string>\"\n      }\n    },\n    \"PickupDateInfo\": {\n      \"CloseTime\": \"<string>\",\n      \"ReadyTime\": \"<string>\",\n      \"PickupDate\": \"<string>\"\n    },\n    \"PickupAddress\": {\n      \"CompanyName\": \"<string>\",\n      \"ContactName\": \"<string>\",\n      \"AddressLine\": \"<string>\",\n      \"City\": \"<string>\",\n      \"StateProvince\": \"<string>\",\n      \"PostalCode\": \"<string>\",\n      \"CountryCode\": \"<string>\",\n      \"ResidentialIndicator\": \"<string>\"\n    },\n    \"OverweightIndicator\": \"<string>\",\n    \"PaymentMethod\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b5fd5cc8-24ef-4023-9fc8-7c4330075dd8",
+          "name": "Cancel Pickup",
+          "request": {
+            "name": "Cancel Pickup",
+            "description": {
+              "content": "Cancel a previously scheduled UPS pickup using the pickup request number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pickup",
+                "v1",
+                "pickups",
+                ":prn"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "prn",
+                  "description": "(Required) Pickup request number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5192d85f-f952-4080-bcf6-726142dac8a8",
+              "name": "Pickup cancelled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups",
+                    ":prn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prn",
+                      "description": "(Required) Pickup request number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"PickupCancelResponse\": {\n    \"Response\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c06ed03c-0ea2-4bb1-b7ec-81fd0e3506c2",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups",
+                    ":prn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prn",
+                      "description": "(Required) Pickup request number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c26760f5-8dc9-47f5-9afc-0623bc3d0065",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups",
+                    ":prn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prn",
+                      "description": "(Required) Pickup request number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "325ca1c0-d21a-4626-9721-03f1c17c5a33",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pickup",
+                    "v1",
+                    "pickups",
+                    ":prn"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "prn",
+                      "description": "(Required) Pickup request number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8a2b6e0-2a4d-44c1-91ed-9c03cdaa808b",
+    "name": "UPS Shipping Address Validation Pickup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

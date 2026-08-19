@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping Address Validation Pickup API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pickup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Schedule Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/pickup/v1/pickups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Schedule a UPS pickup for one or more shipments at a specified address."
+        },
+        {
+          "info": {
+            "name": "Cancel Pickup",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://onlinetools.ups.com/api/pickup/v1/pickups/:prn",
+            "params": [
+              {
+                "name": "prn",
+                "value": "",
+                "type": "path",
+                "description": "Pickup request number"
+              }
+            ]
+          },
+          "docs": "Cancel a previously scheduled UPS pickup using the pickup request number."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

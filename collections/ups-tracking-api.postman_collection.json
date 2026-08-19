@@ -1,0 +1,374 @@
+{
+  "item": [
+    {
+      "id": "48a9d29d-8e36-4164-bb54-abc603dbcf25",
+      "name": "Tracking",
+      "description": {
+        "content": "Package tracking and status",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2c02b908-3c3c-44d3-a922-0fd336ae91b7",
+          "name": "Track Shipment",
+          "request": {
+            "name": "Track Shipment",
+            "description": {
+              "content": "Retrieve real-time tracking information for a package or shipment using a UPS tracking number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "track",
+                "v1",
+                "details",
+                ":inquiryNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "locale",
+                  "value": "en_US",
+                  "description": "Locale for response messages"
+                },
+                {
+                  "disabled": false,
+                  "key": "returnSignature",
+                  "value": "<string>",
+                  "description": "Include delivery signature image if available"
+                },
+                {
+                  "disabled": false,
+                  "key": "returnMilestones",
+                  "value": "<string>",
+                  "description": "Include delivery milestone tracking"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "inquiryNumber",
+                  "description": "(Required) UPS tracking number (1Z...) or shipment reference number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "255ffb3a-fb0d-42f5-a9ac-e6ec41e6ee93",
+              "name": "Tracking details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "v1",
+                    "details",
+                    ":inquiryNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "returnSignature",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnMilestones",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inquiryNumber",
+                      "description": "(Required) UPS tracking number (1Z...) or shipment reference number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trackResponse\": {\n    \"shipment\": [\n      {\n        \"inquiryNumber\": \"string\",\n        \"package\": [\n          {\n            \"trackingNumber\": \"string\",\n            \"currentStatus\": {\n              \"code\": \"string\",\n              \"description\": \"string\",\n              \"simplifiedTextDescription\": \"string\",\n              \"statusCode\": \"string\"\n            },\n            \"deliveryDate\": [\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              },\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              }\n            ],\n            \"activity\": [\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              },\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              }\n            ]\n          },\n          {\n            \"trackingNumber\": \"string\",\n            \"currentStatus\": {\n              \"code\": \"string\",\n              \"description\": \"string\",\n              \"simplifiedTextDescription\": \"string\",\n              \"statusCode\": \"string\"\n            },\n            \"deliveryDate\": [\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              },\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              }\n            ],\n            \"activity\": [\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              },\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"inquiryNumber\": \"string\",\n        \"package\": [\n          {\n            \"trackingNumber\": \"string\",\n            \"currentStatus\": {\n              \"code\": \"string\",\n              \"description\": \"string\",\n              \"simplifiedTextDescription\": \"string\",\n              \"statusCode\": \"string\"\n            },\n            \"deliveryDate\": [\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              },\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              }\n            ],\n            \"activity\": [\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              },\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              }\n            ]\n          },\n          {\n            \"trackingNumber\": \"string\",\n            \"currentStatus\": {\n              \"code\": \"string\",\n              \"description\": \"string\",\n              \"simplifiedTextDescription\": \"string\",\n              \"statusCode\": \"string\"\n            },\n            \"deliveryDate\": [\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              },\n              {\n                \"date\": \"string\",\n                \"type\": \"string\"\n              }\n            ],\n            \"activity\": [\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              },\n              {\n                \"location\": {\n                  \"address\": {\n                    \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                  }\n                },\n                \"status\": {\n                  \"code\": \"string\",\n                  \"description\": \"string\"\n                },\n                \"date\": \"string\",\n                \"time\": \"string\"\n              }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acc861aa-fbe1-41fa-96ed-b1a46eb840d8",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "v1",
+                    "details",
+                    ":inquiryNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "returnSignature",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnMilestones",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inquiryNumber",
+                      "description": "(Required) UPS tracking number (1Z...) or shipment reference number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f901d13-7403-40b0-afc4-862b4fb89c06",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "v1",
+                    "details",
+                    ":inquiryNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "returnSignature",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnMilestones",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inquiryNumber",
+                      "description": "(Required) UPS tracking number (1Z...) or shipment reference number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93dff9f5-a928-4a74-a036-162579793291",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "track",
+                    "v1",
+                    "details",
+                    ":inquiryNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "locale",
+                      "value": "en_US"
+                    },
+                    {
+                      "key": "returnSignature",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnMilestones",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "inquiryNumber",
+                      "description": "(Required) UPS tracking number (1Z...) or shipment reference number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "77418f6b-accc-49f0-8daa-3ae450ded774",
+    "name": "UPS Shipping Address Validation Tracking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

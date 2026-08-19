@@ -1,0 +1,517 @@
+{
+  "item": [
+    {
+      "id": "905ae827-a493-40d8-af91-3ccce3348c76",
+      "name": "Shipping",
+      "description": {
+        "content": "Shipment creation and label generation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bed2f3f9-990c-42bb-b7bd-ff83d5f53afd",
+          "name": "Create Shipment",
+          "request": {
+            "name": "Create Shipment",
+            "description": {
+              "content": "Create a new shipment and generate a shipping label. Returns a tracking number, label image, and shipment confirmation details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipments",
+                "v1",
+                "ship"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ShipmentRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"Shipment\": {\n      \"Shipper\": {\n        \"Name\": \"<string>\",\n        \"ShipperNumber\": \"<string>\",\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"<string>\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        },\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        }\n      },\n      \"ShipTo\": {\n        \"Name\": \"<string>\",\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        },\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"<string>\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        }\n      },\n      \"Service\": {\n        \"Code\": \"<string>\",\n        \"Description\": \"<string>\"\n      },\n      \"Package\": {\n        \"PackagingType\": {\n          \"Code\": \"<string>\"\n        },\n        \"Dimensions\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Length\": \"<string>\",\n          \"Width\": \"<string>\",\n          \"Height\": \"<string>\"\n        },\n        \"PackageWeight\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Weight\": \"<string>\"\n        }\n      }\n    },\n    \"LabelSpecification\": {\n      \"LabelImageFormat\": {\n        \"Code\": \"<string>\"\n      },\n      \"LabelStockSize\": {\n        \"Height\": \"<string>\",\n        \"Width\": \"<string>\"\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "377b8679-361b-4b55-8a17-04e0b0765e05",
+              "name": "Shipment created with label",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "ship"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ShipmentRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"Shipment\": {\n      \"Shipper\": {\n        \"Name\": \"<string>\",\n        \"ShipperNumber\": \"<string>\",\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"US\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        },\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        }\n      },\n      \"ShipTo\": {\n        \"Name\": \"<string>\",\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        },\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"US\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        }\n      },\n      \"Service\": {\n        \"Code\": \"<string>\",\n        \"Description\": \"<string>\"\n      },\n      \"Package\": {\n        \"PackagingType\": {\n          \"Code\": \"<string>\"\n        },\n        \"Dimensions\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Length\": \"<string>\",\n          \"Width\": \"<string>\",\n          \"Height\": \"<string>\"\n        },\n        \"PackageWeight\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Weight\": \"<string>\"\n        }\n      }\n    },\n    \"LabelSpecification\": {\n      \"LabelImageFormat\": {\n        \"Code\": \"<string>\"\n      },\n      \"LabelStockSize\": {\n        \"Height\": \"<string>\",\n        \"Width\": \"<string>\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ShipmentResponse\": {\n    \"Response\": {},\n    \"ShipmentResults\": {\n      \"ShipmentIdentificationNumber\": \"string\",\n      \"PackageResults\": [\n        {\n          \"TrackingNumber\": \"string\",\n          \"ShippingLabel\": {\n            \"ImageFormat\": {\n              \"Code\": \"string\"\n            },\n            \"GraphicImage\": \"string\"\n          }\n        },\n        {\n          \"TrackingNumber\": \"string\",\n          \"ShippingLabel\": {\n            \"ImageFormat\": {\n              \"Code\": \"string\"\n            },\n            \"GraphicImage\": \"string\"\n          }\n        }\n      ],\n      \"BillingWeight\": {\n        \"UnitOfMeasurement\": {\n          \"Code\": \"string\"\n        },\n        \"Weight\": \"string\"\n      },\n      \"ShipmentCharges\": {\n        \"TotalCharges\": {\n          \"CurrencyCode\": \"string\",\n          \"MonetaryValue\": \"string\"\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e20e6612-ee28-4b30-914f-6488b024b845",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "ship"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ShipmentRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"Shipment\": {\n      \"Shipper\": {\n        \"Name\": \"<string>\",\n        \"ShipperNumber\": \"<string>\",\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"US\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        },\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        }\n      },\n      \"ShipTo\": {\n        \"Name\": \"<string>\",\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        },\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"US\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        }\n      },\n      \"Service\": {\n        \"Code\": \"<string>\",\n        \"Description\": \"<string>\"\n      },\n      \"Package\": {\n        \"PackagingType\": {\n          \"Code\": \"<string>\"\n        },\n        \"Dimensions\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Length\": \"<string>\",\n          \"Width\": \"<string>\",\n          \"Height\": \"<string>\"\n        },\n        \"PackageWeight\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Weight\": \"<string>\"\n        }\n      }\n    },\n    \"LabelSpecification\": {\n      \"LabelImageFormat\": {\n        \"Code\": \"<string>\"\n      },\n      \"LabelStockSize\": {\n        \"Height\": \"<string>\",\n        \"Width\": \"<string>\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "172e23ec-d213-446e-aa90-96e72e06f536",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "ship"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ShipmentRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"Shipment\": {\n      \"Shipper\": {\n        \"Name\": \"<string>\",\n        \"ShipperNumber\": \"<string>\",\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"US\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        },\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        }\n      },\n      \"ShipTo\": {\n        \"Name\": \"<string>\",\n        \"AttentionName\": \"<string>\",\n        \"Phone\": {\n          \"Number\": \"<string>\"\n        },\n        \"Address\": {\n          \"AddressLine\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"City\": \"<string>\",\n          \"StateProvinceCode\": \"<string>\",\n          \"PostalCode\": \"<string>\",\n          \"CountryCode\": \"US\",\n          \"ResidentialAddressIndicator\": \"<string>\"\n        }\n      },\n      \"Service\": {\n        \"Code\": \"<string>\",\n        \"Description\": \"<string>\"\n      },\n      \"Package\": {\n        \"PackagingType\": {\n          \"Code\": \"<string>\"\n        },\n        \"Dimensions\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Length\": \"<string>\",\n          \"Width\": \"<string>\",\n          \"Height\": \"<string>\"\n        },\n        \"PackageWeight\": {\n          \"UnitOfMeasurement\": {\n            \"Code\": \"<string>\"\n          },\n          \"Weight\": \"<string>\"\n        }\n      }\n    },\n    \"LabelSpecification\": {\n      \"LabelImageFormat\": {\n        \"Code\": \"<string>\"\n      },\n      \"LabelStockSize\": {\n        \"Height\": \"<string>\",\n        \"Width\": \"<string>\"\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "66b67c50-94cb-463b-b2ad-72b0650a9622",
+          "name": "Void Shipment",
+          "request": {
+            "name": "Void Shipment",
+            "description": {
+              "content": "Cancel/void a shipment by its tracking number before it is tendered to UPS.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shipments",
+                "v1",
+                "void",
+                "cancel",
+                ":shipmentIdentificationNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shipmentIdentificationNumber",
+                  "description": "(Required) UPS tracking number / shipment identification number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6dc2da2-a6f1-4461-965c-3e3b17eed9f4",
+              "name": "Shipment voided successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "void",
+                    "cancel",
+                    ":shipmentIdentificationNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentIdentificationNumber",
+                      "description": "(Required) UPS tracking number / shipment identification number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"VoidShipmentResponse\": {\n    \"Response\": {},\n    \"SummaryResult\": {\n      \"Status\": {\n        \"Code\": \"string\",\n        \"Description\": \"string\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84a93834-e4c7-4371-bf9a-7e6c2fce0080",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "void",
+                    "cancel",
+                    ":shipmentIdentificationNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentIdentificationNumber",
+                      "description": "(Required) UPS tracking number / shipment identification number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fee0499f-fd20-423b-a32e-4ea7aaff0dde",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "void",
+                    "cancel",
+                    ":shipmentIdentificationNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentIdentificationNumber",
+                      "description": "(Required) UPS tracking number / shipment identification number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0608481c-12ad-4db0-aac1-866999c98d73",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shipments",
+                    "v1",
+                    "void",
+                    "cancel",
+                    ":shipmentIdentificationNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipmentIdentificationNumber",
+                      "description": "(Required) UPS tracking number / shipment identification number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4a0a25b6-1a6d-4ec8-a3d1-5a4a5a63bcd0",
+    "name": "UPS Address Validation Shipping API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "item": [
+    {
+      "id": "e7b98648-757b-4766-acba-293a6e66e82c",
+      "name": "OAuth",
+      "description": {
+        "content": "OAuth 2.0 token management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d85d92c6-0b04-4915-9ba5-869b95707e0e",
+          "name": "Get OAuth Token",
+          "request": {
+            "name": "Get OAuth Token",
+            "description": {
+              "content": "Obtain an OAuth 2.0 access token using client credentials grant type. The access token is used to authenticate all subsequent API requests.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "security",
+                "v1",
+                "oauth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) OAuth grant type"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1cee72e9-33d4-4f0a-a3f0-54ff6d025d9a",
+              "name": "Access token response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "security",
+                    "v1",
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) OAuth grant type",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token_type\": \"Bearer\",\n  \"issued_at\": \"string\",\n  \"client_id\": \"string\",\n  \"access_token\": \"string\",\n  \"expires_in\": \"14399\",\n  \"status\": \"approved\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f74bc502-2297-4505-b625-c7e0903005a4",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "security",
+                    "v1",
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) OAuth grant type",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c38cbc7f-e082-468c-9361-35a2b94a61f3",
+    "name": "UPS Shipping Address Validation OAuth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

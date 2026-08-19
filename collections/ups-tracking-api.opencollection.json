@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping Address Validation Tracking API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Track Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://onlinetools.ups.com/api/track/v1/details/:inquiryNumber",
+            "params": [
+              {
+                "name": "inquiryNumber",
+                "value": "",
+                "type": "path",
+                "description": "UPS tracking number (1Z...) or shipment reference number"
+              },
+              {
+                "name": "locale",
+                "value": "",
+                "type": "query",
+                "description": "Locale for response messages"
+              },
+              {
+                "name": "returnSignature",
+                "value": "",
+                "type": "query",
+                "description": "Include delivery signature image if available"
+              },
+              {
+                "name": "returnMilestones",
+                "value": "",
+                "type": "query",
+                "description": "Include delivery milestone tracking"
+              }
+            ]
+          },
+          "docs": "Retrieve real-time tracking information for a package or shipment using a UPS tracking number."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

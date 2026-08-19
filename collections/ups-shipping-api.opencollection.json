@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Address Validation Shipping API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shipping",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/shipments/v1/ship",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new shipment and generate a shipping label. Returns a tracking number, label image, and shipment confirmation details."
+        },
+        {
+          "info": {
+            "name": "Void Shipment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://onlinetools.ups.com/api/shipments/v1/void/cancel/:shipmentIdentificationNumber",
+            "params": [
+              {
+                "name": "shipmentIdentificationNumber",
+                "value": "",
+                "type": "path",
+                "description": "UPS tracking number / shipment identification number"
+              }
+            ]
+          },
+          "docs": "Cancel/void a shipment by its tracking number before it is tendered to UPS."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

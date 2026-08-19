@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "6afa89c3-b1c4-488a-b9e1-89176ffd12f7",
+      "name": "Address Validation",
+      "description": {
+        "content": "Address validation and standardization",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bbc22a17-755f-4b2e-ac57-371e4f5f1d22",
+          "name": "Validate Address Street Level",
+          "request": {
+            "name": "Validate Address Street Level",
+            "description": {
+              "content": "Validate and standardize a street-level address. Returns whether the address is valid, standardized formatting, and residential/commercial classification.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "addressvalidation",
+                "v1",
+                "1"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"AddressValidationRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"AddressKeyFormat\": {\n      \"CountryCode\": \"<string>\",\n      \"ConsigneeName\": \"<string>\",\n      \"AddressLine\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"PoliticalDivision2\": \"<string>\",\n      \"PoliticalDivision1\": \"<string>\",\n      \"PostcodePrimaryLow\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2ea9bf47-978e-4748-8c04-058723b2dfc5",
+              "name": "Address validation response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addressvalidation",
+                    "v1",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AddressValidationRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"AddressKeyFormat\": {\n      \"CountryCode\": \"<string>\",\n      \"ConsigneeName\": \"<string>\",\n      \"AddressLine\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"PoliticalDivision2\": \"<string>\",\n      \"PoliticalDivision1\": \"<string>\",\n      \"PostcodePrimaryLow\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"AddressValidationResponse\": {\n    \"Response\": {},\n    \"AddressClassification\": {\n      \"Code\": \"0\",\n      \"Description\": \"string\"\n    },\n    \"AddressKeyFormat\": {\n      \"AddressLine\": [\n        \"string\",\n        \"string\"\n      ],\n      \"PoliticalDivision2\": \"string\",\n      \"PoliticalDivision1\": \"string\",\n      \"PostcodePrimaryLow\": \"string\",\n      \"PostcodeExtendedLow\": \"string\",\n      \"CountryCode\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "257df96c-e151-45b0-ba90-e7a7eb6b14a2",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addressvalidation",
+                    "v1",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AddressValidationRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"AddressKeyFormat\": {\n      \"CountryCode\": \"<string>\",\n      \"ConsigneeName\": \"<string>\",\n      \"AddressLine\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"PoliticalDivision2\": \"<string>\",\n      \"PoliticalDivision1\": \"<string>\",\n      \"PostcodePrimaryLow\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a29a01c6-c793-47d7-b99c-3b73dd9c1242",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "addressvalidation",
+                    "v1",
+                    "1"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"AddressValidationRequest\": {\n    \"Request\": {\n      \"RequestOption\": \"<string>\"\n    },\n    \"AddressKeyFormat\": {\n      \"CountryCode\": \"<string>\",\n      \"ConsigneeName\": \"<string>\",\n      \"AddressLine\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"PoliticalDivision2\": \"<string>\",\n      \"PoliticalDivision1\": \"<string>\",\n      \"PostcodePrimaryLow\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f2402cf2-2a0e-414f-994f-c78e6ea24cc1",
+    "name": "UPS Shipping Address Validation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "item": [
+    {
+      "id": "ef362efe-0d93-4b4c-90c6-fa404e7d8c19",
+      "name": "Paperless Documents",
+      "description": {
+        "content": "International paperless document management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea43813b-aefa-427e-9e49-43d4d53c65aa",
+          "name": "Upload Paperless Document",
+          "request": {
+            "name": "Upload Paperless Document",
+            "description": {
+              "content": "Upload an international shipping document (e.g., commercial invoice, certificate of origin) for paperless trade.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "paperlessdocuments",
+                "v1",
+                "upload",
+                ":shipperNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shipperNumber",
+                  "description": "(Required) UPS account (shipper) number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"UploadRequest\": {\n    \"Request\": \"<object>\",\n    \"UserCreatedForm\": [\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      },\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "231fa82a-9279-4f92-a118-dbf4da1f2f50",
+              "name": "Document uploaded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "paperlessdocuments",
+                    "v1",
+                    "upload",
+                    ":shipperNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipperNumber",
+                      "description": "(Required) UPS account (shipper) number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"UploadRequest\": {\n    \"Request\": \"<object>\",\n    \"UserCreatedForm\": [\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      },\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"UploadResponse\": {\n    \"Response\": {},\n    \"FormsHistoryDocumentID\": [\n      {\n        \"DocumentID\": \"string\"\n      },\n      {\n        \"DocumentID\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a29d425-3930-4eea-aa9b-0ee6c13d460e",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "paperlessdocuments",
+                    "v1",
+                    "upload",
+                    ":shipperNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipperNumber",
+                      "description": "(Required) UPS account (shipper) number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"UploadRequest\": {\n    \"Request\": \"<object>\",\n    \"UserCreatedForm\": [\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      },\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f80435b-6946-492b-b4ed-402a232a607f",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "paperlessdocuments",
+                    "v1",
+                    "upload",
+                    ":shipperNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shipperNumber",
+                      "description": "(Required) UPS account (shipper) number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"UploadRequest\": {\n    \"Request\": \"<object>\",\n    \"UserCreatedForm\": [\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      },\n      {\n        \"UserCreatedFormFileName\": \"<string>\",\n        \"UserCreatedFormFile\": \"<string>\",\n        \"UserCreatedFormFileFormat\": {\n          \"Code\": \"<string>\"\n        },\n        \"UserCreatedFormDocumentType\": {\n          \"Code\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c864c130-a805-4f21-9c80-adf415c80726",
+    "name": "UPS Shipping Address Validation Paperless Documents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

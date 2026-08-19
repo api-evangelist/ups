@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping Address Validation OAuth API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OAuth Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/security/v1/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Obtain an OAuth 2.0 access token using client credentials grant type. The access token is used to authenticate all subsequent API requests."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

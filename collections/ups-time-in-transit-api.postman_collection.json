@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "38277116-8ebe-44bd-a284-2083b6c5a176",
+      "name": "Time In Transit",
+      "description": {
+        "content": "Transit time and service schedules",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9995e43c-01f3-440b-a6f3-972e62f8ccc5",
+          "name": "Get Time In Transit",
+          "request": {
+            "name": "Get Time In Transit",
+            "description": {
+              "content": "Get estimated transit times for UPS services between origin and destination, given a ship date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "timeintransit",
+                "v1",
+                "transittimes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"originCountryCode\": \"<string>\",\n  \"originStateProvince\": \"<string>\",\n  \"originCityName\": \"<string>\",\n  \"originPostalCode\": \"<string>\",\n  \"destinationCountryCode\": \"<string>\",\n  \"destinationStateProvince\": \"<string>\",\n  \"destinationCityName\": \"<string>\",\n  \"destinationPostalCode\": \"<string>\",\n  \"weight\": \"<string>\",\n  \"weightUnitOfMeasure\": \"<string>\",\n  \"shipDate\": \"<string>\",\n  \"shipTime\": \"<string>\",\n  \"residentialIndicator\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7690973f-17b1-4074-95be-a4d67ab15964",
+              "name": "Time-in-transit estimates by service",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeintransit",
+                    "v1",
+                    "transittimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originCountryCode\": \"<string>\",\n  \"originStateProvince\": \"<string>\",\n  \"originCityName\": \"<string>\",\n  \"originPostalCode\": \"<string>\",\n  \"destinationCountryCode\": \"<string>\",\n  \"destinationStateProvince\": \"<string>\",\n  \"destinationCityName\": \"<string>\",\n  \"destinationPostalCode\": \"<string>\",\n  \"weight\": \"<string>\",\n  \"weightUnitOfMeasure\": \"<string>\",\n  \"shipDate\": \"<string>\",\n  \"shipTime\": \"<string>\",\n  \"residentialIndicator\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validationList\": {},\n  \"emsResponse\": {\n    \"shipDate\": \"string\",\n    \"shipTime\": \"string\",\n    \"services\": [\n      {\n        \"serviceLevel\": \"string\",\n        \"serviceLevelDescription\": \"string\",\n        \"deliveryDate\": \"string\",\n        \"deliveryTime\": \"string\",\n        \"commitTime\": \"string\",\n        \"businessTransitDays\": 9450\n      },\n      {\n        \"serviceLevel\": \"string\",\n        \"serviceLevelDescription\": \"string\",\n        \"deliveryDate\": \"string\",\n        \"deliveryTime\": \"string\",\n        \"commitTime\": \"string\",\n        \"businessTransitDays\": 3829\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43c60b83-45df-4767-b9e6-db55c4647f5e",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeintransit",
+                    "v1",
+                    "transittimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originCountryCode\": \"<string>\",\n  \"originStateProvince\": \"<string>\",\n  \"originCityName\": \"<string>\",\n  \"originPostalCode\": \"<string>\",\n  \"destinationCountryCode\": \"<string>\",\n  \"destinationStateProvince\": \"<string>\",\n  \"destinationCityName\": \"<string>\",\n  \"destinationPostalCode\": \"<string>\",\n  \"weight\": \"<string>\",\n  \"weightUnitOfMeasure\": \"<string>\",\n  \"shipDate\": \"<string>\",\n  \"shipTime\": \"<string>\",\n  \"residentialIndicator\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad92265e-2814-4831-a4dd-49cb661f919f",
+              "name": "OAuth token missing or expired",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeintransit",
+                    "v1",
+                    "transittimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originCountryCode\": \"<string>\",\n  \"originStateProvince\": \"<string>\",\n  \"originCityName\": \"<string>\",\n  \"originPostalCode\": \"<string>\",\n  \"destinationCountryCode\": \"<string>\",\n  \"destinationStateProvince\": \"<string>\",\n  \"destinationCityName\": \"<string>\",\n  \"destinationPostalCode\": \"<string>\",\n  \"weight\": \"<string>\",\n  \"weightUnitOfMeasure\": \"<string>\",\n  \"shipDate\": \"<string>\",\n  \"shipTime\": \"<string>\",\n  \"residentialIndicator\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"errors\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://onlinetools.ups.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e01bacc7-6b05-4c12-addc-a9accf912273",
+    "name": "UPS Shipping Address Validation Time In Transit API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.\n\nContact Support:\n Name: UPS Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

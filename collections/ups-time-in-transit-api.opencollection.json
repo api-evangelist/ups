@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping Address Validation Time In Transit API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Time In Transit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Time In Transit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/timeintransit/v1/transittimes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get estimated transit times for UPS services between origin and destination, given a ship date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

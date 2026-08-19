@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping Address Validation API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Address Validation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate Address Street Level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/addressvalidation/v1/1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate and standardize a street-level address. Returns whether the address is valid, standardized formatting, and residential/commercial classification."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

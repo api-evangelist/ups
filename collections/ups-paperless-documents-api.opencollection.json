@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UPS Shipping Address Validation Paperless Documents API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Paperless Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload Paperless Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://onlinetools.ups.com/api/paperlessdocuments/v1/upload/:shipperNumber",
+            "params": [
+              {
+                "name": "shipperNumber",
+                "value": "",
+                "type": "path",
+                "description": "UPS account (shipper) number"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upload an international shipping document (e.g., commercial invoice, certificate of origin) for paperless trade."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
