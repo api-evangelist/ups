@@ -1,5 +1,7 @@
 aid: ups
 url: https://raw.githubusercontent.com/api-evangelist/ups/refs/heads/main/apis.yml
+x-api-posture: partner-gated
+x-api-posture-basis: observed
 apis:
 - aid: ups:ups-address-validation-api
   name: UPS Address Validation API
