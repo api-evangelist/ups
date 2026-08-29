@@ -175,6 +175,9 @@ description: UPS, or United Parcel Service, is a Fortune 500 global logistics co
   tracking, rating, address validation, pickup scheduling, paperless international
   documents, and time-in-transit estimation.
 common:
+- type: CapabilityMap
+  url: capabilities/ups-capability-edges.yml
+  name: UPS Business Capability Map
 - type: AgenticAccess
   url: agentic-access/ups-agentic-access.yml
 - type: DomainSecurity

@@ -1,0 +1,53 @@
+slug: ups
+provider: UPS
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Tracking
+  spec_file: ups-tracking-api-openapi.yml
+  capability_id: BC-2510.20
+  capability_id_l1: BC-2510
+  capability_name: Shipment Tracking Management
+  confidence: 0.95
+  evidence: 'GET /track/v1/details/{inquiryNumber}  trackShipment  Track Shipment; schemas: TrackResponse'
+  reason: Single operation retrieves package tracking details for a shipment inquiry number, which is
+    exactly shipment status resolution and delivery of tracking information.
+- tag: Pickup
+  spec_file: ups-pickup-api-openapi.yml
+  capability_id: BC-2420.30
+  capability_id_l1: BC-2420
+  capability_name: Pickup and Drayage Operations Management
+  confidence: 0.8
+  evidence: POST /pickup/v1/pickups  schedulePickup  Schedule Pickup; DELETE /pickup/v1/pickups/{prn}  cancelPickup
+  reason: Scheduling and cancelling carrier collection at the shipper's premises is first-mile pickup
+    operations.
+- tag: Rating
+  spec_file: ups-rating-api-openapi.yml
+  capability_id: BC-2520.50
+  capability_id_l1: BC-2520
+  capability_name: Rating Engine Operations Management
+  confidence: 0.8
+  evidence: 'POST /rating/v1/Shop  shopRates; POST /rating/v1/Rate  getRate; schemas: RateRequest, RateResponse,
+    ServiceCode'
+  reason: Calculation of freight charges for a given shipment across service codes is rating-engine operation;
+    tariff authoring itself is not exposed, so the engine sub-capability fits best.
+- tag: Shipping
+  spec_file: ups-shipping-api-openapi.yml
+  capability_id: BC-2400.40
+  capability_id_l1: BC-2400
+  capability_name: Booking and Reservation Management
+  confidence: 0.7
+  evidence: POST /shipments/v1/ship  createShipment  Create Shipment; DELETE /shipments/v1/void/cancel/{shipmentIdentificationNumber}  voidShipment
+  reason: Creating and voiding shipments with the carrier is acceptance and cancellation of transport
+    bookings against published services (ServiceCode, ShipmentRequest). Label generation is bundled, adding
+    some ambiguity.
