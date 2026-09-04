@@ -168,7 +168,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ups.png
 access: 3rd-Party
 created: '2025-03-01'
 modified: '2026-05-19'
-position: Consumer
+position: Consuming
 description: UPS, or United Parcel Service, is a Fortune 500 global logistics company
   that specializes in package delivery and supply chain management services. UPS provides
   a comprehensive REST API platform with OAuth 2.0 authentication covering shipping,
