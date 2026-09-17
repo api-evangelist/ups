@@ -115,16 +115,16 @@ apis:
     url: https://developer.ups.com/get-started
   - type: GraphQL
     url: graphql/ups-graphql.md
-- aid: ups:ups-o-auth-api
+- aid: ups:ups-oauth-api
   name: UPS O Auth API
   description: OAuth 2.0 token management
   humanURL: https://developer.ups.com/
   baseURL: https://onlinetools.ups.com/api
   tags:
-  - O Auth
+  - OAuth
   properties:
   - type: OpenAPI
-    url: openapi/ups-o-auth-api-openapi.yml
+    url: openapi/ups-oauth-api-openapi.yml
   - type: Documentation
     url: https://developer.ups.com/
   - type: GettingStarted
