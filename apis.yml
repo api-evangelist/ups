@@ -57,6 +57,8 @@ apis:
   humanURL: https://developer.ups.com/
   baseURL: https://onlinetools.ups.com/api
   tags:
+  - Ratings
+  tags_raw:
   - Rating
   properties:
   - type: OpenAPI
@@ -121,6 +123,8 @@ apis:
   humanURL: https://developer.ups.com/
   baseURL: https://onlinetools.ups.com/api
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
