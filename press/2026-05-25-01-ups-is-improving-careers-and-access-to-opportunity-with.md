@@ -1,7 +1,9 @@
 ---
 title: UPS is improving careers and access to opportunity with ...
 url: https://about.ups.com/us/en/our-stories/innovation-driven/ups-is-improving-careers-and-access-to-opportunity-with-the-help.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"UPS" press release artificial intelligence'
 position: 1
 source: serpapi-google

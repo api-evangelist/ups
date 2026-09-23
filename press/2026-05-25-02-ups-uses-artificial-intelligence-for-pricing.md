@@ -1,7 +1,9 @@
 ---
 title: UPS Uses Artificial Intelligence For Pricing
 url: https://www.forbes.com/sites/stevebanker/2025/04/21/ups-uses-artificial-intelligence-for-pricing/
-date: '2026-05-25'
+published: '2025-04-21'
+date_basis: url-derived
+harvested: '2026-05-25'
 query: '"UPS" press release artificial intelligence'
 position: 2
 source: serpapi-google

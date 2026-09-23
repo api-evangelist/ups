@@ -1,14 +1,7 @@
 {
   "provider": "ups",
   "sources": [
-    "ups-address-validation-api-openapi.yml",
-    "ups-oauth-api-openapi.yml",
-    "ups-paperless-documents-api-openapi.yml",
-    "ups-pickup-api-openapi.yml",
-    "ups-rating-api-openapi.yml",
-    "ups-shipping-api-openapi.yml",
-    "ups-time-in-transit-api-openapi.yml",
-    "ups-tracking-api-openapi.yml"
+    "_original/ups-shipping-openapi.yml"
   ],
   "outputs": [
     "ups-address-validation-api-openapi.yml",
@@ -20,9 +13,25 @@
     "ups-time-in-transit-api-openapi.yml",
     "ups-tracking-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ups-shipping-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "superseded outputs removed: ups-o-auth-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 8 total)"
+  ],
+  "skipped": [
+    "ups-address-validation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-paperless-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-pickup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-rating-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-shipping-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-time-in-transit-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ups-tracking-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

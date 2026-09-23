@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: UPS Address Validation Shipping API
+  title: UPS Shipping API
   description: The UPS Shipping API enables developers to create and manage shipments, generate shipping labels, validate addresses, retrieve rates, track packages, schedule pickups, manage returns, and access time-in-transit information. UPS uses OAuth 2.0 with client credentials for authentication.
   version: v1
   contact:
@@ -71,8 +71,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Resource not found
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
@@ -83,8 +83,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Invalid request
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -142,6 +142,91 @@ components:
                           type: string
                         MonetaryValue:
                           type: string
+    ShipperInfo:
+      type: object
+      required:
+      - Name
+      - ShipperNumber
+      - Address
+      properties:
+        Name:
+          type: string
+        AttentionName:
+          type: string
+        ShipperNumber:
+          type: string
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    VoidResponse:
+      type: object
+      properties:
+        VoidShipmentResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            SummaryResult:
+              type: object
+              properties:
+                Status:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+    ServiceCode:
+      type: object
+      properties:
+        Code:
+          type: string
+          description: 'UPS service codes:
+
+            01=Next Day Air, 02=2nd Day Air, 03=Ground,
+
+            07=World Wide Express, 08=World Wide Expedited,
+
+            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
+
+            14=Next Day Air Early AM, 54=Worldwide Express Plus,
+
+            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
+
+            83=Today Dedicated Courier, 84=Today Intercity,
+
+            85=Today Express, 86=Today Express Saver
+
+            '
+        Description:
+          type: string
+    Address:
+      type: object
+      properties:
+        AddressLine:
+          type: array
+          items:
+            type: string
+          description: Street address lines
+        City:
+          type: string
+        StateProvinceCode:
+          type: string
+          description: Two-letter state/province code
+        PostalCode:
+          type: string
+        CountryCode:
+          type: string
+          description: Two-letter ISO country code
+          example: US
+        ResidentialAddressIndicator:
+          type: string
+          description: Presence indicates residential address
     ShipmentRequest:
       type: object
       required:
@@ -201,82 +286,6 @@ components:
                       type: string
                     Width:
                       type: string
-    Address:
-      type: object
-      properties:
-        AddressLine:
-          type: array
-          items:
-            type: string
-          description: Street address lines
-        City:
-          type: string
-        StateProvinceCode:
-          type: string
-          description: Two-letter state/province code
-        PostalCode:
-          type: string
-        CountryCode:
-          type: string
-          description: Two-letter ISO country code
-          example: US
-        ResidentialAddressIndicator:
-          type: string
-          description: Presence indicates residential address
-    VoidResponse:
-      type: object
-      properties:
-        VoidShipmentResponse:
-          type: object
-          properties:
-            Response:
-              type: object
-            SummaryResult:
-              type: object
-              properties:
-                Status:
-                  type: object
-                  properties:
-                    Code:
-                      type: string
-                    Description:
-                      type: string
-    ErrorResponse:
-      type: object
-      properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-    ShipperInfo:
-      type: object
-      required:
-      - Name
-      - ShipperNumber
-      - Address
-      properties:
-        Name:
-          type: string
-        AttentionName:
-          type: string
-        ShipperNumber:
-          type: string
-          description: UPS account number
-        Phone:
-          type: object
-          properties:
-            Number:
-              type: string
-        Address:
-          $ref: '#/components/schemas/Address'
     PackageInfo:
       type: object
       properties:
@@ -316,30 +325,21 @@ components:
                   - KGS
             Weight:
               type: string
-    ServiceCode:
+    ErrorResponse:
       type: object
       properties:
-        Code:
-          type: string
-          description: 'UPS service codes:
-
-            01=Next Day Air, 02=2nd Day Air, 03=Ground,
-
-            07=World Wide Express, 08=World Wide Expedited,
-
-            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
-
-            14=Next Day Air Early AM, 54=Worldwide Express Plus,
-
-            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
-
-            83=Today Dedicated Courier, 84=Today Intercity,
-
-            85=Today Express, 86=Today Express Saver
-
-            '
-        Description:
-          type: string
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
   securitySchemes:
     OAuth2:
       type: oauth2
