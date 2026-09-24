@@ -17,8 +17,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-paperless-documents-api
   name: UPS Paperless Documents API
   description: International paperless document management
@@ -33,8 +31,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-pickup-api
   name: UPS Pickup API
   description: Pickup scheduling and management
@@ -49,8 +45,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-rating-api
   name: UPS Rating API
   description: Shipping rates and service comparison
@@ -67,8 +61,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-shipping-api
   name: UPS Shipping API
   description: Shipment creation and label generation
@@ -83,8 +75,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-time-in-transit-api
   name: UPS Time In Transit API
   description: Transit time and service schedules
@@ -99,8 +89,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-tracking-api
   name: UPS Tracking API
   description: Package tracking and status
@@ -115,8 +103,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 - aid: ups:ups-oauth-api
   name: UPS O Auth API
   description: OAuth 2.0 token management
@@ -133,8 +119,6 @@ apis:
     url: https://developer.ups.com/
   - type: GettingStarted
     url: https://developer.ups.com/get-started
-  - type: GraphQL
-    url: graphql/ups-graphql.md
 name: UPS
 tags:
 - Logistics
