@@ -70,117 +70,22 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: OAuth token missing or expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ShipmentResponse:
+    ErrorResponse:
       type: object
       properties:
-        ShipmentResponse:
+        response:
           type: object
           properties:
-            Response:
-              type: object
-            ShipmentResults:
-              type: object
-              properties:
-                ShipmentIdentificationNumber:
-                  type: string
-                  description: UPS tracking number
-                PackageResults:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      TrackingNumber:
-                        type: string
-                      ShippingLabel:
-                        type: object
-                        properties:
-                          ImageFormat:
-                            type: object
-                            properties:
-                              Code:
-                                type: string
-                          GraphicImage:
-                            type: string
-                            description: Base64-encoded label image
-                BillingWeight:
-                  type: object
-                  properties:
-                    UnitOfMeasurement:
-                      type: object
-                      properties:
-                        Code:
-                          type: string
-                    Weight:
-                      type: string
-                ShipmentCharges:
-                  type: object
-                  properties:
-                    TotalCharges:
-                      type: object
-                      properties:
-                        CurrencyCode:
-                          type: string
-                        MonetaryValue:
-                          type: string
-    ShipperInfo:
-      type: object
-      required:
-      - Name
-      - ShipperNumber
-      - Address
-      properties:
-        Name:
-          type: string
-        AttentionName:
-          type: string
-        ShipperNumber:
-          type: string
-          description: UPS account number
-        Phone:
-          type: object
-          properties:
-            Number:
-              type: string
-        Address:
-          $ref: '#/components/schemas/Address'
-    VoidResponse:
-      type: object
-      properties:
-        VoidShipmentResponse:
-          type: object
-          properties:
-            Response:
-              type: object
-            SummaryResult:
-              type: object
-              properties:
-                Status:
-                  type: object
-                  properties:
-                    Code:
-                      type: string
-                    Description:
-                      type: string
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
     ServiceCode:
       type: object
       properties:
@@ -205,28 +110,84 @@ components:
             '
         Description:
           type: string
-    Address:
+    VoidResponse:
       type: object
       properties:
-        AddressLine:
-          type: array
-          items:
-            type: string
-          description: Street address lines
-        City:
+        VoidShipmentResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            SummaryResult:
+              type: object
+              properties:
+                Status:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+    PackageInfo:
+      type: object
+      properties:
+        PackagingType:
+          type: object
+          properties:
+            Code:
+              type: string
+              description: 02 = customer supplied package
+        Dimensions:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - IN
+                  - CM
+            Length:
+              type: string
+            Width:
+              type: string
+            Height:
+              type: string
+        PackageWeight:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - LBS
+                  - KGS
+            Weight:
+              type: string
+    ShipperInfo:
+      type: object
+      required:
+      - Name
+      - ShipperNumber
+      - Address
+      properties:
+        Name:
           type: string
-        StateProvinceCode:
+        AttentionName:
           type: string
-          description: Two-letter state/province code
-        PostalCode:
+        ShipperNumber:
           type: string
-        CountryCode:
-          type: string
-          description: Two-letter ISO country code
-          example: US
-        ResidentialAddressIndicator:
-          type: string
-          description: Presence indicates residential address
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
     ShipmentRequest:
       type: object
       required:
@@ -286,60 +247,99 @@ components:
                       type: string
                     Width:
                       type: string
-    PackageInfo:
+    ShipmentResponse:
       type: object
       properties:
-        PackagingType:
+        ShipmentResponse:
           type: object
           properties:
-            Code:
-              type: string
-              description: 02 = customer supplied package
-        Dimensions:
-          type: object
-          properties:
-            UnitOfMeasurement:
+            Response:
+              type: object
+            ShipmentResults:
               type: object
               properties:
-                Code:
+                ShipmentIdentificationNumber:
                   type: string
-                  enum:
-                  - IN
-                  - CM
-            Length:
-              type: string
-            Width:
-              type: string
-            Height:
-              type: string
-        PackageWeight:
-          type: object
-          properties:
-            UnitOfMeasurement:
-              type: object
-              properties:
-                Code:
-                  type: string
-                  enum:
-                  - LBS
-                  - KGS
-            Weight:
-              type: string
-    ErrorResponse:
+                  description: UPS tracking number
+                PackageResults:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      TrackingNumber:
+                        type: string
+                      ShippingLabel:
+                        type: object
+                        properties:
+                          ImageFormat:
+                            type: object
+                            properties:
+                              Code:
+                                type: string
+                          GraphicImage:
+                            type: string
+                            description: Base64-encoded label image
+                BillingWeight:
+                  type: object
+                  properties:
+                    UnitOfMeasurement:
+                      type: object
+                      properties:
+                        Code:
+                          type: string
+                    Weight:
+                      type: string
+                ShipmentCharges:
+                  type: object
+                  properties:
+                    TotalCharges:
+                      type: object
+                      properties:
+                        CurrencyCode:
+                          type: string
+                        MonetaryValue:
+                          type: string
+    Address:
       type: object
       properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
+        AddressLine:
+          type: array
+          items:
+            type: string
+          description: Street address lines
+        City:
+          type: string
+        StateProvinceCode:
+          type: string
+          description: Two-letter state/province code
+        PostalCode:
+          type: string
+        CountryCode:
+          type: string
+          description: Two-letter ISO country code
+          example: US
+        ResidentialAddressIndicator:
+          type: string
+          description: Presence indicates residential address
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     OAuth2:
       type: oauth2
