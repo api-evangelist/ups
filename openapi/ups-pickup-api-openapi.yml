@@ -71,21 +71,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ErrorResponse:
+    CancelPickupResponse:
       type: object
       properties:
-        response:
+        PickupCancelResponse:
           type: object
           properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
+            Response:
+              type: object
     PickupResponse:
       type: object
       properties:
@@ -102,14 +95,21 @@ components:
                   type: string
                 Description:
                   type: string
-    CancelPickupResponse:
+    ErrorResponse:
       type: object
       properties:
-        PickupCancelResponse:
+        response:
           type: object
           properties:
-            Response:
-              type: object
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
     PickupRequest:
       type: object
       properties:

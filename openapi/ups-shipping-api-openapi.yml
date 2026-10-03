@@ -71,123 +71,58 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ErrorResponse:
+    ShipmentResponse:
       type: object
       properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-    ServiceCode:
-      type: object
-      properties:
-        Code:
-          type: string
-          description: 'UPS service codes:
-
-            01=Next Day Air, 02=2nd Day Air, 03=Ground,
-
-            07=World Wide Express, 08=World Wide Expedited,
-
-            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
-
-            14=Next Day Air Early AM, 54=Worldwide Express Plus,
-
-            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
-
-            83=Today Dedicated Courier, 84=Today Intercity,
-
-            85=Today Express, 86=Today Express Saver
-
-            '
-        Description:
-          type: string
-    VoidResponse:
-      type: object
-      properties:
-        VoidShipmentResponse:
+        ShipmentResponse:
           type: object
           properties:
             Response:
               type: object
-            SummaryResult:
+            ShipmentResults:
               type: object
               properties:
-                Status:
+                ShipmentIdentificationNumber:
+                  type: string
+                  description: UPS tracking number
+                PackageResults:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      TrackingNumber:
+                        type: string
+                      ShippingLabel:
+                        type: object
+                        properties:
+                          ImageFormat:
+                            type: object
+                            properties:
+                              Code:
+                                type: string
+                          GraphicImage:
+                            type: string
+                            description: Base64-encoded label image
+                BillingWeight:
                   type: object
                   properties:
-                    Code:
+                    UnitOfMeasurement:
+                      type: object
+                      properties:
+                        Code:
+                          type: string
+                    Weight:
                       type: string
-                    Description:
-                      type: string
-    PackageInfo:
-      type: object
-      properties:
-        PackagingType:
-          type: object
-          properties:
-            Code:
-              type: string
-              description: 02 = customer supplied package
-        Dimensions:
-          type: object
-          properties:
-            UnitOfMeasurement:
-              type: object
-              properties:
-                Code:
-                  type: string
-                  enum:
-                  - IN
-                  - CM
-            Length:
-              type: string
-            Width:
-              type: string
-            Height:
-              type: string
-        PackageWeight:
-          type: object
-          properties:
-            UnitOfMeasurement:
-              type: object
-              properties:
-                Code:
-                  type: string
-                  enum:
-                  - LBS
-                  - KGS
-            Weight:
-              type: string
-    ShipperInfo:
-      type: object
-      required:
-      - Name
-      - ShipperNumber
-      - Address
-      properties:
-        Name:
-          type: string
-        AttentionName:
-          type: string
-        ShipperNumber:
-          type: string
-          description: UPS account number
-        Phone:
-          type: object
-          properties:
-            Number:
-              type: string
-        Address:
-          $ref: '#/components/schemas/Address'
+                ShipmentCharges:
+                  type: object
+                  properties:
+                    TotalCharges:
+                      type: object
+                      properties:
+                        CurrencyCode:
+                          type: string
+                        MonetaryValue:
+                          type: string
     ShipmentRequest:
       type: object
       required:
@@ -247,58 +182,78 @@ components:
                       type: string
                     Width:
                       type: string
-    ShipmentResponse:
+    PackageInfo:
       type: object
       properties:
-        ShipmentResponse:
+        PackagingType:
+          type: object
+          properties:
+            Code:
+              type: string
+              description: 02 = customer supplied package
+        Dimensions:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - IN
+                  - CM
+            Length:
+              type: string
+            Width:
+              type: string
+            Height:
+              type: string
+        PackageWeight:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - LBS
+                  - KGS
+            Weight:
+              type: string
+    VoidResponse:
+      type: object
+      properties:
+        VoidShipmentResponse:
           type: object
           properties:
             Response:
               type: object
-            ShipmentResults:
+            SummaryResult:
               type: object
               properties:
-                ShipmentIdentificationNumber:
-                  type: string
-                  description: UPS tracking number
-                PackageResults:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      TrackingNumber:
-                        type: string
-                      ShippingLabel:
-                        type: object
-                        properties:
-                          ImageFormat:
-                            type: object
-                            properties:
-                              Code:
-                                type: string
-                          GraphicImage:
-                            type: string
-                            description: Base64-encoded label image
-                BillingWeight:
+                Status:
                   type: object
                   properties:
-                    UnitOfMeasurement:
-                      type: object
-                      properties:
-                        Code:
-                          type: string
-                    Weight:
+                    Code:
                       type: string
-                ShipmentCharges:
-                  type: object
-                  properties:
-                    TotalCharges:
-                      type: object
-                      properties:
-                        CurrencyCode:
-                          type: string
-                        MonetaryValue:
-                          type: string
+                    Description:
+                      type: string
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
     Address:
       type: object
       properties:
@@ -321,6 +276,51 @@ components:
         ResidentialAddressIndicator:
           type: string
           description: Presence indicates residential address
+    ServiceCode:
+      type: object
+      properties:
+        Code:
+          type: string
+          description: 'UPS service codes:
+
+            01=Next Day Air, 02=2nd Day Air, 03=Ground,
+
+            07=World Wide Express, 08=World Wide Expedited,
+
+            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
+
+            14=Next Day Air Early AM, 54=Worldwide Express Plus,
+
+            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
+
+            83=Today Dedicated Courier, 84=Today Intercity,
+
+            85=Today Express, 86=Today Express Saver
+
+            '
+        Description:
+          type: string
+    ShipperInfo:
+      type: object
+      required:
+      - Name
+      - ShipperNumber
+      - Address
+      properties:
+        Name:
+          type: string
+        AttentionName:
+          type: string
+        ShipperNumber:
+          type: string
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
   responses:
     BadRequest:
       description: Invalid request
