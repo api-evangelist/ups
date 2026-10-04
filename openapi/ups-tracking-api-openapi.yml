@@ -69,6 +69,21 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
     TrackResponse:
       type: object
       properties:
@@ -130,21 +145,6 @@ components:
                                 type: string
                               time:
                                 type: string
-    ErrorResponse:
-      type: object
-      properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
     Address:
       type: object
       properties:
@@ -168,12 +168,6 @@ components:
           type: string
           description: Presence indicates residential address
   responses:
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     NotFound:
       description: Resource not found
       content:
@@ -182,6 +176,12 @@ components:
             $ref: '#/components/schemas/ErrorResponse'
     Unauthorized:
       description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:

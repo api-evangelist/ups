@@ -71,6 +71,63 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
+    VoidResponse:
+      type: object
+      properties:
+        VoidShipmentResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            SummaryResult:
+              type: object
+              properties:
+                Status:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+    ServiceCode:
+      type: object
+      properties:
+        Code:
+          type: string
+          description: 'UPS service codes:
+
+            01=Next Day Air, 02=2nd Day Air, 03=Ground,
+
+            07=World Wide Express, 08=World Wide Expedited,
+
+            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
+
+            14=Next Day Air Early AM, 54=Worldwide Express Plus,
+
+            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
+
+            83=Today Dedicated Courier, 84=Today Intercity,
+
+            85=Today Express, 86=Today Express Saver
+
+            '
+        Description:
+          type: string
     ShipmentResponse:
       type: object
       properties:
@@ -123,6 +180,88 @@ components:
                           type: string
                         MonetaryValue:
                           type: string
+    PackageInfo:
+      type: object
+      properties:
+        PackagingType:
+          type: object
+          properties:
+            Code:
+              type: string
+              description: 02 = customer supplied package
+        Dimensions:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - IN
+                  - CM
+            Length:
+              type: string
+            Width:
+              type: string
+            Height:
+              type: string
+        PackageWeight:
+          type: object
+          properties:
+            UnitOfMeasurement:
+              type: object
+              properties:
+                Code:
+                  type: string
+                  enum:
+                  - LBS
+                  - KGS
+            Weight:
+              type: string
+    ShipperInfo:
+      type: object
+      required:
+      - Name
+      - ShipperNumber
+      - Address
+      properties:
+        Name:
+          type: string
+        AttentionName:
+          type: string
+        ShipperNumber:
+          type: string
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    Address:
+      type: object
+      properties:
+        AddressLine:
+          type: array
+          items:
+            type: string
+          description: Street address lines
+        City:
+          type: string
+        StateProvinceCode:
+          type: string
+          description: Two-letter state/province code
+        PostalCode:
+          type: string
+        CountryCode:
+          type: string
+          description: Two-letter ISO country code
+          example: US
+        ResidentialAddressIndicator:
+          type: string
+          description: Presence indicates residential address
     ShipmentRequest:
       type: object
       required:
@@ -182,154 +321,15 @@ components:
                       type: string
                     Width:
                       type: string
-    PackageInfo:
-      type: object
-      properties:
-        PackagingType:
-          type: object
-          properties:
-            Code:
-              type: string
-              description: 02 = customer supplied package
-        Dimensions:
-          type: object
-          properties:
-            UnitOfMeasurement:
-              type: object
-              properties:
-                Code:
-                  type: string
-                  enum:
-                  - IN
-                  - CM
-            Length:
-              type: string
-            Width:
-              type: string
-            Height:
-              type: string
-        PackageWeight:
-          type: object
-          properties:
-            UnitOfMeasurement:
-              type: object
-              properties:
-                Code:
-                  type: string
-                  enum:
-                  - LBS
-                  - KGS
-            Weight:
-              type: string
-    VoidResponse:
-      type: object
-      properties:
-        VoidShipmentResponse:
-          type: object
-          properties:
-            Response:
-              type: object
-            SummaryResult:
-              type: object
-              properties:
-                Status:
-                  type: object
-                  properties:
-                    Code:
-                      type: string
-                    Description:
-                      type: string
-    ErrorResponse:
-      type: object
-      properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-    Address:
-      type: object
-      properties:
-        AddressLine:
-          type: array
-          items:
-            type: string
-          description: Street address lines
-        City:
-          type: string
-        StateProvinceCode:
-          type: string
-          description: Two-letter state/province code
-        PostalCode:
-          type: string
-        CountryCode:
-          type: string
-          description: Two-letter ISO country code
-          example: US
-        ResidentialAddressIndicator:
-          type: string
-          description: Presence indicates residential address
-    ServiceCode:
-      type: object
-      properties:
-        Code:
-          type: string
-          description: 'UPS service codes:
-
-            01=Next Day Air, 02=2nd Day Air, 03=Ground,
-
-            07=World Wide Express, 08=World Wide Expedited,
-
-            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
-
-            14=Next Day Air Early AM, 54=Worldwide Express Plus,
-
-            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
-
-            83=Today Dedicated Courier, 84=Today Intercity,
-
-            85=Today Express, 86=Today Express Saver
-
-            '
-        Description:
-          type: string
-    ShipperInfo:
-      type: object
-      required:
-      - Name
-      - ShipperNumber
-      - Address
-      properties:
-        Name:
-          type: string
-        AttentionName:
-          type: string
-        ShipperNumber:
-          type: string
-          description: UPS account number
-        Phone:
-          type: object
-          properties:
-            Number:
-              type: string
-        Address:
-          $ref: '#/components/schemas/Address'
   responses:
-    BadRequest:
-      description: Invalid request
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Resource not found
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:

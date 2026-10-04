@@ -43,60 +43,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: OAuth token missing or expired
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    TimeInTransitRequest:
-      type: object
-      properties:
-        originCountryCode:
-          type: string
-          description: ISO country code of origin
-        originStateProvince:
-          type: string
-        originCityName:
-          type: string
-        originPostalCode:
-          type: string
-        destinationCountryCode:
-          type: string
-        destinationStateProvince:
-          type: string
-        destinationCityName:
-          type: string
-        destinationPostalCode:
-          type: string
-        weight:
-          type: string
-          description: Package weight
-        weightUnitOfMeasure:
-          type: string
-          enum:
-          - LBS
-          - KGS
-        shipDate:
-          type: string
-          description: Scheduled ship date (YYYY-MM-DD)
-        shipTime:
-          type: string
-          description: Ship time (HH:MM:SS)
-        residentialIndicator:
-          type: string
-          enum:
-          - '1'
-          - '2'
-          description: 1=Residential, 2=Commercial
     ErrorResponse:
       type: object
       properties:
@@ -145,6 +92,59 @@ components:
                     type: string
                   businessTransitDays:
                     type: integer
+    TimeInTransitRequest:
+      type: object
+      properties:
+        originCountryCode:
+          type: string
+          description: ISO country code of origin
+        originStateProvince:
+          type: string
+        originCityName:
+          type: string
+        originPostalCode:
+          type: string
+        destinationCountryCode:
+          type: string
+        destinationStateProvince:
+          type: string
+        destinationCityName:
+          type: string
+        destinationPostalCode:
+          type: string
+        weight:
+          type: string
+          description: Package weight
+        weightUnitOfMeasure:
+          type: string
+          enum:
+          - LBS
+          - KGS
+        shipDate:
+          type: string
+          description: Scheduled ship date (YYYY-MM-DD)
+        shipTime:
+          type: string
+          description: Ship time (HH:MM:SS)
+        residentialIndicator:
+          type: string
+          enum:
+          - '1'
+          - '2'
+          description: 1=Residential, 2=Commercial
+  responses:
+    Unauthorized:
+      description: OAuth token missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     OAuth2:
       type: oauth2
