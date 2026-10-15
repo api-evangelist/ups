@@ -1,15 +1,49 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/ups-shipping-openapi.yml
-docs: https://developer.ups.com/api/reference/oauth/client-credentials
-note: UPS OAuth 2.0 does not publish named scopes — the client credentials token
-  request takes no scope parameter and the authorization-code spec leaves scope as
-  an undocumented free-form string, with API permissions instead granted by adding
-  API products to an application in the UPS Developer Portal (https://developer.ups.com/api/reference/oauth/client-credentials).
+generated: '2026-10-14'
+method: none
+source: openapi/ups-address-validation-api-openapi.yml, openapi/ups-oauth-api-openapi.yml, openapi/ups-paperless-documents-api-openapi.yml,
+  openapi/ups-pickup-api-openapi.yml, openapi/ups-rating-api-openapi.yml, openapi/ups-shipping-api-openapi.yml,
+  openapi/ups-time-in-transit-api-openapi.yml, openapi/ups-tracking-api-openapi.yml
 schemes:
 - name: OAuth2
-  source: openapi/ups-shipping-openapi.yml
+  source: openapi/ups-address-validation-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-oauth-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-paperless-documents-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-pickup-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-rating-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-shipping-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-time-in-transit-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
+- name: OAuth2
+  source: openapi/ups-tracking-api-openapi.yml
   flows:
   - flow: clientCredentials
     tokenUrl: https://onlinetools.ups.com/api/security/v1/oauth/token
 scopes: []
+note: The OAuth2 security scheme(s) in the OpenAPI declare no scopes, and no security requirement
+  references one.
