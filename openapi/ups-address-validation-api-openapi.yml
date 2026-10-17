@@ -137,14 +137,14 @@ components:
                 CountryCode:
                   type: string
   responses:
-    Unauthorized:
-      description: OAuth token missing or expired
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Invalid request
+    Unauthorized:
+      description: OAuth token missing or expired
       content:
         application/json:
           schema:

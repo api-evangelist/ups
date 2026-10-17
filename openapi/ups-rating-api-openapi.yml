@@ -68,21 +68,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
     RateRequest:
       type: object
       required:
@@ -121,67 +106,21 @@ components:
                   $ref: '#/components/schemas/ServiceCode'
                 Package:
                   $ref: '#/components/schemas/PackageInfo'
-    ServiceCode:
+    ErrorResponse:
       type: object
       properties:
-        Code:
-          type: string
-          description: 'UPS service codes:
-
-            01=Next Day Air, 02=2nd Day Air, 03=Ground,
-
-            07=World Wide Express, 08=World Wide Expedited,
-
-            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
-
-            14=Next Day Air Early AM, 54=Worldwide Express Plus,
-
-            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
-
-            83=Today Dedicated Courier, 84=Today Intercity,
-
-            85=Today Express, 86=Today Express Saver
-
-            '
-        Description:
-          type: string
-    RateResponse:
-      type: object
-      properties:
-        RateResponse:
+        response:
           type: object
           properties:
-            Response:
-              type: object
-              properties:
-                ResponseStatus:
-                  type: object
-                  properties:
-                    Code:
-                      type: string
-                    Description:
-                      type: string
-            RatedShipment:
+            errors:
               type: array
               items:
                 type: object
                 properties:
-                  Service:
-                    $ref: '#/components/schemas/ServiceCode'
-                  TotalCharges:
-                    type: object
-                    properties:
-                      CurrencyCode:
-                        type: string
-                      MonetaryValue:
-                        type: string
-                  GuaranteedDelivery:
-                    type: object
-                    properties:
-                      BusinessDaysInTransit:
-                        type: string
-                      DeliveryByTime:
-                        type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
     PackageInfo:
       type: object
       properties:
@@ -221,27 +160,43 @@ components:
                   - KGS
             Weight:
               type: string
-    ShipperInfo:
+    RateResponse:
       type: object
-      required:
-      - Name
-      - ShipperNumber
-      - Address
       properties:
-        Name:
-          type: string
-        AttentionName:
-          type: string
-        ShipperNumber:
-          type: string
-          description: UPS account number
-        Phone:
+        RateResponse:
           type: object
           properties:
-            Number:
-              type: string
-        Address:
-          $ref: '#/components/schemas/Address'
+            Response:
+              type: object
+              properties:
+                ResponseStatus:
+                  type: object
+                  properties:
+                    Code:
+                      type: string
+                    Description:
+                      type: string
+            RatedShipment:
+              type: array
+              items:
+                type: object
+                properties:
+                  Service:
+                    $ref: '#/components/schemas/ServiceCode'
+                  TotalCharges:
+                    type: object
+                    properties:
+                      CurrencyCode:
+                        type: string
+                      MonetaryValue:
+                        type: string
+                  GuaranteedDelivery:
+                    type: object
+                    properties:
+                      BusinessDaysInTransit:
+                        type: string
+                      DeliveryByTime:
+                        type: string
     Address:
       type: object
       properties:
@@ -264,15 +219,60 @@ components:
         ResidentialAddressIndicator:
           type: string
           description: Presence indicates residential address
+    ShipperInfo:
+      type: object
+      required:
+      - Name
+      - ShipperNumber
+      - Address
+      properties:
+        Name:
+          type: string
+        AttentionName:
+          type: string
+        ShipperNumber:
+          type: string
+          description: UPS account number
+        Phone:
+          type: object
+          properties:
+            Number:
+              type: string
+        Address:
+          $ref: '#/components/schemas/Address'
+    ServiceCode:
+      type: object
+      properties:
+        Code:
+          type: string
+          description: 'UPS service codes:
+
+            01=Next Day Air, 02=2nd Day Air, 03=Ground,
+
+            07=World Wide Express, 08=World Wide Expedited,
+
+            11=Standard, 12=3 Day Select, 13=Next Day Air Saver,
+
+            14=Next Day Air Early AM, 54=Worldwide Express Plus,
+
+            59=2nd Day Air A.M., 65=UPS Saver, 82=Today Standard,
+
+            83=Today Dedicated Courier, 84=Today Intercity,
+
+            85=Today Express, 86=Today Express Saver
+
+            '
+        Description:
+          type: string
   responses:
-    Unauthorized:
-      description: OAuth token missing or expired
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Invalid request
+    Unauthorized:
+      description: OAuth token missing or expired
       content:
         application/json:
           schema:

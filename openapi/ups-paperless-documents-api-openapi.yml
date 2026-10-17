@@ -66,6 +66,21 @@ components:
                     type: string
                   message:
                     type: string
+    PaperlessDocumentResponse:
+      type: object
+      properties:
+        UploadResponse:
+          type: object
+          properties:
+            Response:
+              type: object
+            FormsHistoryDocumentID:
+              type: array
+              items:
+                type: object
+                properties:
+                  DocumentID:
+                    type: string
     PaperlessDocumentRequest:
       type: object
       properties:
@@ -100,30 +115,15 @@ components:
                     properties:
                       Code:
                         type: string
-    PaperlessDocumentResponse:
-      type: object
-      properties:
-        UploadResponse:
-          type: object
-          properties:
-            Response:
-              type: object
-            FormsHistoryDocumentID:
-              type: array
-              items:
-                type: object
-                properties:
-                  DocumentID:
-                    type: string
   responses:
-    Unauthorized:
-      description: OAuth token missing or expired
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Invalid request
+    Unauthorized:
+      description: OAuth token missing or expired
       content:
         application/json:
           schema:

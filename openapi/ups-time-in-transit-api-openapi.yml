@@ -59,39 +59,6 @@ components:
                     type: string
                   message:
                     type: string
-    TimeInTransitResponse:
-      type: object
-      properties:
-        validationList:
-          type: object
-        destinationPickList:
-          type: array
-          items:
-            type: object
-        emsResponse:
-          type: object
-          properties:
-            shipDate:
-              type: string
-            shipTime:
-              type: string
-            services:
-              type: array
-              items:
-                type: object
-                properties:
-                  serviceLevel:
-                    type: string
-                  serviceLevelDescription:
-                    type: string
-                  deliveryDate:
-                    type: string
-                  deliveryTime:
-                    type: string
-                  commitTime:
-                    type: string
-                  businessTransitDays:
-                    type: integer
     TimeInTransitRequest:
       type: object
       properties:
@@ -132,15 +99,48 @@ components:
           - '1'
           - '2'
           description: 1=Residential, 2=Commercial
+    TimeInTransitResponse:
+      type: object
+      properties:
+        validationList:
+          type: object
+        destinationPickList:
+          type: array
+          items:
+            type: object
+        emsResponse:
+          type: object
+          properties:
+            shipDate:
+              type: string
+            shipTime:
+              type: string
+            services:
+              type: array
+              items:
+                type: object
+                properties:
+                  serviceLevel:
+                    type: string
+                  serviceLevelDescription:
+                    type: string
+                  deliveryDate:
+                    type: string
+                  deliveryTime:
+                    type: string
+                  commitTime:
+                    type: string
+                  businessTransitDays:
+                    type: integer
   responses:
-    Unauthorized:
-      description: OAuth token missing or expired
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Invalid request
+    Unauthorized:
+      description: OAuth token missing or expired
       content:
         application/json:
           schema:

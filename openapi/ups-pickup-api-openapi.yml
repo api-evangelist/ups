@@ -71,37 +71,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        response:
-          type: object
-          properties:
-            errors:
-              type: array
-              items:
-                type: object
-                properties:
-                  code:
-                    type: string
-                  message:
-                    type: string
-    PickupResponse:
-      type: object
-      properties:
-        PickupCreationResponse:
-          type: object
-          properties:
-            PRN:
-              type: string
-              description: Pickup request number
-            RateStatus:
-              type: object
-              properties:
-                Code:
-                  type: string
-                Description:
-                  type: string
     PickupRequest:
       type: object
       properties:
@@ -167,6 +136,21 @@ components:
               enum:
               - '01'
               description: 01 = Account
+    ErrorResponse:
+      type: object
+      properties:
+        response:
+          type: object
+          properties:
+            errors:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                  message:
+                    type: string
     CancelPickupResponse:
       type: object
       properties:
@@ -175,6 +159,22 @@ components:
           properties:
             Response:
               type: object
+    PickupResponse:
+      type: object
+      properties:
+        PickupCreationResponse:
+          type: object
+          properties:
+            PRN:
+              type: string
+              description: Pickup request number
+            RateStatus:
+              type: object
+              properties:
+                Code:
+                  type: string
+                Description:
+                  type: string
   responses:
     NotFound:
       description: Resource not found
@@ -182,14 +182,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: OAuth token missing or expired
+    BadRequest:
+      description: Invalid request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Invalid request
+    Unauthorized:
+      description: OAuth token missing or expired
       content:
         application/json:
           schema:
