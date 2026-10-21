@@ -106,11 +106,29 @@ edges:
   detected: '2026-10-20'
   detected_by: mirror-platform-listings.py
   category: Shipping & Fulfillment, Shipping Rates
+- partner_name: Amazon Selling Partner Appstore
+  partner: amazon-seller-central
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://sellercentral.amazon.com/selling-partner-appstore/dp/amzn1.sp.solution.747c74b3-8e04-44a6-9969-f3ada37a952d
+  mirror_of: amazon-seller-central/integrations/amazon-seller-central-integration-edges.yml
+  apps:
+  - UPS Marketplace Shipping Hybrid App
+  detected: '2026-10-21'
+  detected_by: sweep-amazon-sp-api-appstore.py
 generated: '2026-10-12'
 method: searched
 checked:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
 - https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
 - bigcommerce/integrations/bigcommerce-integration-edges.yml
+- https://advertising.amazon.com/partners/directory
+- https://sellercentral.amazon.com/gspn
+- https://sellercentral.amazon.com/selling-partner-appstore
 source:
 - https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
